@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { Text, Pressable, ImageBackground, StyleSheet, View } from 'react-native';
-import gbImage from '../assets/homeBG3.jpg'
+import { Text, Pressable, ImageBackground, StyleSheet, View, StatusBar } from 'react-native';
+import gbImage from '../assets/pictures/homeBG3.jpg';
+import COLORS from '../consts/colors';
 
 export default function HomeScreen({ navigation }) {
   return (
     <ImageBackground source={gbImage} style={styles.container}>
-     <Text style={styles.titlee}>Sek'Clean Car Wash Services</Text> 
+      <StatusBar backgroundColor={COLORS.tial}/>
+     <Text style={styles.titlee}>Sek'Clean Car Wash Admin portal</Text> 
      <Pressable 
       style={styles.signup} 
       onPress={() =>  navigation.push("SignupScreen")}
