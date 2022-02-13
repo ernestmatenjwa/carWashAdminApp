@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
       textTransform: 'uppercase',
       color: 'white',
       fontWeight: 'bold',
-      textAlign: 'center',
+      paddingLeft: 20,
+      //textAlign: 'center',
       top: 100,
   },
   signup: {

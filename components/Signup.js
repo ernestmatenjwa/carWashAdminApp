@@ -71,7 +71,7 @@ export default function SignupScreen({ navigation }) {
             <Pressable 
                style={styles.login} 
                onPress={() => {
-              navigation.navigate("LocationScreen");
+              navigation.navigate("DashBoadScreen");
             }}>
               <Text style={styles.text}>Create Account</Text>
             </Pressable>
