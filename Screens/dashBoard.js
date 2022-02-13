@@ -121,6 +121,31 @@ export default function DashBoadScreen({ navigation }) {
           alignSelf: "flex-start",
           padding: 10,
         }}>Overview</Text>
+        <Text style={{
+          color: "#064451", 
+          fontWeight: "bold", 
+          fontSize: 15, 
+          alignSelf: "flex-end",
+          padding: 10,
+         // paddingTop: 40,
+          marginTop: -120,
+        }}>4</Text>
+        <Text style={{
+          color: "#064451", 
+          fontWeight: "bold", 
+          fontSize: 15, 
+          alignSelf: "flex-end",
+          padding: 10,
+          //paddingTop: 40,
+        }}>12</Text>
+        <Text style={{
+          color: "#064451", 
+          fontWeight: "bold", 
+          fontSize: 15, 
+          alignSelf: "flex-end",
+          padding: 10,
+          //paddingTop: 40,
+        }}>134</Text>
         <View style={{width: 338, borderRadius:10, marginTop:30, alignItems:"center"}}>
         
         </View>
