@@ -67,7 +67,7 @@ const TabScreen = () => {
           headerTitleAlign: 'center',
           headerTitleStyle: {
             color: "white",
-            fontWeight: "800",
+            fontWeight: "600",
             fontSize: 30,
             padding: 20,
           },
@@ -95,7 +95,7 @@ const TabScreen = () => {
           headerTitleAlign: 'center',
           headerTitleStyle: {
             color: "white",
-            fontWeight: "800",
+            fontWeight: "600",
             fontSize: 30,
           },
           headerStyle: {
@@ -126,7 +126,23 @@ export default function App() {
         <Stack.Screen name="LoginScreen" component={LoginScreen} options={{header: () => null}} />
         <Stack.Screen name="BusinessProfileScreen" component={BusinessProfileScreen} />
         <Stack.Screen name="DashBoadScreen" component={TabScreen} options={{header: () => null}} />
-        <Stack.Screen name="HistoryScreen" component={HistoryScreen} />
+        <Stack.Screen name="HistoryScreen" 
+        component={HistoryScreen}
+        options={({route}) => ({
+          title: "History",
+          headerBackTitleVisible: false,
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            color: "white",
+            fontWeight: "600"
+          },
+          headerStyle: {
+            backgroundColor: '#064451',
+            shadowColor: '#064451',
+            elevation: 0,
+          },
+        })}
+        />
         <Stack.Screen 
           name="RequestScreen" 
           component={RequestScreen}
@@ -136,9 +152,12 @@ export default function App() {
             headerTitleAlign: 'center',
             headerTitleStyle: {
               color: "#064451",
-              fontWeight: "800",
+              fontWeight: "700",
               fontSize: 25,
             },
+            headerStyle: {
+               backgroundColor: "lightgrey",
+            }
           })} 
         />
         <Stack.Screen 

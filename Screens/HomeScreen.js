@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       paddingLeft: 20,
       //textAlign: 'center',
-      top: 100,
+      top: 40,
   },
   signup: {
     position: 'absolute',

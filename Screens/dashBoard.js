@@ -17,7 +17,7 @@ export default function DashBoadScreen({ navigation }) {
      >
         <View style={{width: 100, height: 80, borderRadius:10, marginTop:30, alignItems:"center"}}>
            <Iconicons name={"list-outline"} size={25} color={"#064451"} />
-           <Text style={{color: "#064451", fontWeight: "bold", fontSize: 15 }}>Request</Text>
+           <Text style={{color: "#064451", fontWeight: "bold", fontSize: 15 }}>Requests</Text>
         </View>
         
       </TouchableOpacity>   
@@ -146,10 +146,6 @@ export default function DashBoadScreen({ navigation }) {
           padding: 10,
           //paddingTop: 40,
         }}>134</Text>
-        <View style={{width: 338, borderRadius:10, marginTop:30, alignItems:"center"}}>
-        
-        </View>
-        
       </View>
   </View>
   );
@@ -175,23 +171,26 @@ const styles = StyleSheet.create({
         
     },
     inner2:{
-      backgroundColor:'#ffffff',
+      backgroundColor:'#064451',
   alignItems:'center',
      height:60,
       borderRadius:10,
       margin:4,
       marginTop: 20,
       padding:5,
-      backgroundColor: "rgba(0, 0, 0, 0.31)"
+      width: 340,
   },
   inner3:{
-    backgroundColor:'#ffffff',
-alignItems:'center',
+    backgroundColor:'lightgrey',
+   alignItems:'center',
    height:200,
+   width: 340,
     borderRadius:10,
     margin:4,
     marginTop: 20,
     padding:5,
+    borderLeftColor: "#064451",
+    borderLeftWidth: 15,
     //backgroundColor: "#064451"
 },
     subHeader:{
