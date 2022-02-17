@@ -124,7 +124,7 @@ export default function App() {
         <Stack.Screen name="Splash" component={HomeScreen} options={{header: () => null}} />
         <Stack.Screen name="SignupScreen" component={SignupScreen} options={{header: () => null}} />
         <Stack.Screen name="LoginScreen" component={LoginScreen} options={{header: () => null}} />
-        <Stack.Screen name="BusinessProfileScreen" component={BusinessProfileScreen} />
+        <Stack.Screen name="BusinessProfileScreen" component={BusinessProfileScreen} options={{header: () => null}}/>
         <Stack.Screen name="DashBoadScreen" component={TabScreen} options={{header: () => null}} />
         <Stack.Screen name="HistoryScreen" 
         component={HistoryScreen}
@@ -179,7 +179,7 @@ export default function App() {
         })}
         />
         <Stack.Screen name="InformationScreen" component={InformationScreen} />
-        <Stack.Screen name="DocumentsScreen" component={DocumentsScreen} />
+        <Stack.Screen name="DocumentsScreen" component={DocumentsScreen} options={{header: () => null}}/>
         <Stack.Screen name="StaffScreen" component={StaffScreen} />
         <Stack.Screen name="VehicleTypeScreen" component={VehicleTypeScreen} />
         <Stack.Screen name="BusinessPageScreen" component={BusinessPageScreen} />
