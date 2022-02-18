@@ -179,8 +179,8 @@ export default function App() {
           headerTitleAlign: 'center',
           headerTitleStyle: {
             color: "white",
-            fontWeight: "700",
-            fontSize: 40,
+            fontWeight: "200",
+            fontSize: 20,
             padding: 20,
           },
           headerStyle: {
@@ -267,7 +267,7 @@ export default function App() {
         })}
         />
         <Stack.Screen name="InformationScreen" component={InformationScreen} />
-        <Stack.Screen name="DocumentsScreen" component={DocumentsScreen} />
+        <Stack.Screen name="DocumentsScreen" component={DocumentsScreen} options={{header: () => null}}/>
         <Stack.Screen name="StaffScreen" component={StaffScreen} />
         <Stack.Screen name="VehicleTypeScreen" component={VehicleTypeScreen} />
         <Stack.Screen name="BusinessPageScreen" component={BusinessPageScreen} />
