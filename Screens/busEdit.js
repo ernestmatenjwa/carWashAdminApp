@@ -7,53 +7,53 @@ import { Input } from 'react-native-elements';
 import img from "../assets/pictures/person.png"
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-
 const { width, height }= Dimensions.get("screen");
 
-export default function BusinessProfileScreen({ navigation }) {
+export default function BusineEdit({ navigation }) {
   //const [text, onChangeText] = React.useState('');
   return (
     <View style = {styles.container}>
-    <View style = {{justifyContent:'center',alignItems:'center', width:"100%", marginTop: "1%", marginBottom: "0%"}}>          
+    <View style = {{justifyContent:'center',alignItems:'center', width:"100%", }}>          
        <Image source={img} style={styles.UserImg} /> 
     </View>
-    <Text style = {styles.text_header}>Sek'Clean Carwash</Text>
+    <Text style = {styles.text_header}>Sek'Clean carwash</Text>
+
     <Text style={styles.text_footer}>Business Name</Text>
     <Input 
         //onChangeText={onChangeText} value={text}
         inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
-        inputStyle ={[styles.inputText, {paddingLeft: 15}]}                
-        placeholder="Sek'Clean Carwash"
+        inputStyle = {[styles.inputText, {paddingLeft: 15}]}
+        placeholder="Sek'Clean carwash"
         rightIcon={ <Icon size={24} 
         style={styles.icon} name='home'/>}
-        disabled
+        //disabled
     />
-    
-    <Text style={styles.text_footer}>Business location</Text>
+    <Text style={styles.text_footer}>location</Text>
     <Input 
-        //onChangeText={onChangeText} value={text}
+       // onChangeText={onChangeText} value={text}
         inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
-        inputStyle = {[styles.inputText, {paddingLeft: 15}]}
-        placeholder="Pretoria, soshanguve"
+        inputStyle = {[styles.inputText, {paddingLeft: 15}]}               
+        placeholder="Pretoria, Soshanguve"
         rightIcon={ <Icon size={24} 
         style={styles.icon} name='map-marker'/>}
-        disabled
+        //disabled
     />
-    
     <View style={styles.button}> 
         <LinearGradient
+        
            colors={['#064451', '#064451']}
            style={styles.signIn}
         ><Text style={[
             styles.textSign, 
             {color:'#fff'}]}
-            onPress={() =>  navigation.push("BusineEdit")}
-            >Edit</Text>
+            onPress={() =>  navigation.push("AdminEdit")}
+            >Submit</Text>
         </LinearGradient>
     </View> 
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   text_footer: {
       color: '#064451',
       fontSize: 18,
-      paddingBottom: 10,
+      paddingTop: 0,
   },
   action: {
       flexDirection: 'row',
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   },
   button: {
       alignItems: 'flex-end',
-      //marginTop: "-3%"
+      marginTop: "-5%"
   },
   signIn: {
       width: '30%',

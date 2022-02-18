@@ -17,7 +17,6 @@ export default function StaffScreen({ navigation }) {
           <Text >{item.name}</Text>
         </View>
       ))}
-    
     </ScrollView>
   );
 }

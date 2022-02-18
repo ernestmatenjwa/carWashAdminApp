@@ -12,7 +12,7 @@ export default function ProfileScreen({ navigation }) {
     setMessages([
       {
         _id: 1,
-        text: 'Hello developer',
+        text: 'Heyy Heyy how are u',
         createdAt: new Date(),
         user: {
           _id: 2,
@@ -22,7 +22,7 @@ export default function ProfileScreen({ navigation }) {
       },
       {
         _id: 2,
-        text: 'Hello world',
+        text: 'Heyy Alex',
         createdAt: new Date(),
         user: {
           _id: 1,

@@ -10,55 +10,51 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 const { width, height }= Dimensions.get("screen");
 
-export default function AdminProfileScreen({ navigation }) {
-    const [text, onChangeText] = React.useState('');
+export default function AdminEdit({ navigation }) {
+//   const [text, onChangeText] = React.useState('');
+//   const [email, onChangeEmail] = React.useState('');
+//   const [phone, onChangePhone] = React.useState('');
   return (
     <View style = {styles.container}>
-    <View style = {{justifyContent:'center',alignItems:'center', width:"100%", }}>          
+    <View style = {{justifyContent:'center',alignItems:'center', width:"100%", marginTop: "1%", marginBottom: "0%"}}>          
        <Image source={img} style={styles.UserImg} /> 
     </View>
     <Text style = {styles.text_header}>Alex Mathenjwa </Text>
-    <Text style={[styles.text_footer, {marginTop:"-10%"}]}>Full Name</Text>
+    <Text style={styles.text_footer}>Full Name</Text>
     <Input 
-        onChangeText={onChangeText} value={text}
+        //onChangeText={onChangeText} value={text}
         inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
         inputStyle ={[styles.inputText, {paddingLeft: 15}]}                
         placeholder="Alex Mathenjwa"
         rightIcon={ <Icon size={24} 
         style={styles.icon} name='user'/>}
-        disabled
     />
     
     <Text style={styles.text_footer}>Email Address</Text>
     <Input 
-        onChangeText={onChangeText} value={text}
+        //onChangeText={onChangeEmail} value={text}
         inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
         inputStyle = {[styles.inputText, {paddingLeft: 15}]}
         placeholder="alexmatenjwa@gmail.com"
         rightIcon={ <Icon size={24} 
         style={styles.icon} name='envelope'/>}
-        disabled
     />
     <Text style={styles.text_footer}>Phone</Text>
     <Input 
-        onChangeText={onChangeText} value={text}
+        //onChangeText={onChangePhone} value={text}
         inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
         inputStyle = {[styles.inputText, {paddingLeft: 15}]}               
         placeholder="0729476167"
         rightIcon={ <Icon size={24} 
         style={styles.icon} name='phone'/>}
-        disabled
     />
     <View style={styles.button}> 
         <LinearGradient
-        
            colors={['#064451', '#064451']}
            style={styles.signIn}
         ><Text style={[
             styles.textSign, 
-            {color:'#fff'}]}
-            onPress={() =>  navigation.push("AdminEdit")}
-            >Edit</Text>
+            {color:'#fff'}]}>Submit</Text>
         </LinearGradient>
     </View> 
     </View>
@@ -67,7 +63,7 @@ export default function AdminProfileScreen({ navigation }) {
 const styles = StyleSheet.create({
     container: {
       flex: 1, 
-      width: width,
+      //width: width,
       //backgroundColor: '#009387'
       padding: 10
     },
@@ -110,7 +106,7 @@ const styles = StyleSheet.create({
     text_footer: {
         color: '#064451',
         fontSize: 18,
-        paddingTop: 0,
+        paddingBottom: 10,
     },
     action: {
         flexDirection: 'row',
@@ -146,7 +142,7 @@ const styles = StyleSheet.create({
     },
     button: {
         alignItems: 'flex-end',
-        marginTop: "-5%"
+        //marginTop: "-3%"
     },
     signIn: {
         width: '30%',

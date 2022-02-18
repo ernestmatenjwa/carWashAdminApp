@@ -5,42 +5,42 @@ const Messages = [
   {
     id: '1',
     userName: 'Innocent',
-    userImg: require('../assets/users/user-3.jpg'),
+    userImg: require('../assets/pictures/person.png'),
     messageTime: '4 mins ago',
     messageText:
-      'Hey there, this is my test for a post of my social app in React Native.',
+      'Hey Alex, Ilove you',
   },
   {
     id: '2',
     userName: 'Mpho',
-    userImg: require('../assets/users/user-1.jpg'),
+    userImg: require('../assets/pictures/person.png'),
     messageTime: '2 hours ago',
     messageText:
-      'Hey there, this is my test for a post of my social app in React Native.',
+      'Hey there, how you doing today',
   },
   {
     id: '3',
     userName: 'Shaun',
-    userImg: require('../assets/users/user-4.jpg'),
+    userImg: require('../assets/pictures/person.png'),
     messageTime: '1 hours ago',
     messageText:
-      'Hey there, this is my test for a post of my social app in React Native.',
+      'wudn?',
   },
   {
     id: '4',
     userName: 'Karabo',
-    userImg: require('../assets/users/user-6.jpg'),
+    userImg: require('../assets/pictures/person.png'),
     messageTime: '1 day ago',
     messageText:
-      'Hey there, this is my test for a post of my social app in React Native.',
+      'No, dont do that',
   },
   {
     id: '5',
     userName: 'Alex',
-    userImg: require('../assets/users/user-7.jpg'),
+    userImg: require('../assets/pictures/person.png'),
     messageTime: '2 days ago',
     messageText:
-      'Hey there, this is my test for a post of my social app in React Native.',
+      'I love you too',
   },
 ];
 

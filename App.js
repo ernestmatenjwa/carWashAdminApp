@@ -15,15 +15,25 @@ import DocumentsScreen from "./components/documents";
 import StaffScreen from "./components/staff";
 import VehicleTypeScreen from "./components/vehicletype";
 import BusinessPageScreen from "./components/businesspage";
+import AdminEdit from "./Screens/adminEdit";
+import BusineEdit from "./Screens/busEdit";
 
 import Iconicons from "react-native-vector-icons/Ionicons"
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+
+// const Stack = createNativeStackNavigator();
+// const MaterialBottomTabs = createBottomTabNavigator();
+// const MaterialTopTabs = createMaterialTopTabNavigator();
+// const MaterialDrawer = createDrawerNavigator();
 
 const Stack = createNativeStackNavigator();
-const locationStack= createNativeStackNavigator();
+const locationStack = createNativeStackNavigator();
+const ProfileStack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
+const MaterialTopTabs = createMaterialTopTabNavigator();
 
 const DashStackScreen = () => {
   return(
@@ -50,13 +60,12 @@ const TabScreen = () => {
            iconName = focused ? 'home' : 'home-outline'
          } else if (rn === 'Messanger') {
           iconName = focused ? 'chatbubbles' : 'chatbubbles-outline'
-         } else if (rn === 'adminProfile') {
+         } else if (rn === 'businessPage') {
           iconName = focused ? 'person' : 'person-outline'
          }
       
         return <Iconicons name={iconName} size={size} color={"#064451"} />
        },
-      // tabBarLabel:() => {return null}
       //https://ionic.io/ionicons
      })}
     >
@@ -80,11 +89,6 @@ const TabScreen = () => {
             borderBottomRightRadius: 20,
           },
           headerBackTitleVisible: false,
-          // headerBackImage: () => (
-          //   <View style={{marginLeft: 15}}>
-          //     <Ionicons name="arrow-back" size={25} color="#2e64e5" />
-          //   </View>
-          // ),
         }}
         />
         <locationStack.Screen 
@@ -105,15 +109,58 @@ const TabScreen = () => {
             elevation: 0,
           },
           headerBackTitleVisible: false,
-          headerBackImage: () => (
-            <View style={{marginLeft: 15}}>
-              <Ionicons name="arrow-back" size={25} color="#2e64e5" />
-            </View>
-          ),
         }}
         />
-        <locationStack.Screen name="adminProfile" component={AdminProfileScreen} />
+        <locationStack.Screen name="businessPage" 
+        children={TabScreen2}
+        options={{
+          title: 'Business Page',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            color: "white",
+            fontWeight: "700",
+            fontSize: 40,
+            padding: 20,
+          },
+          headerStyle: {
+            height: 140,
+            backgroundColor: '#064451',
+            shadowColor: '#064451',
+            elevation: 0,
+            borderBottomLeftRadius: 20,
+            borderBottomRightRadius: 20,
+          },
+        }}
+        />
     </Tabs.Navigator>
+  )
+}
+
+const TabScreen2 = () => {
+  return(
+    <MaterialTopTabs.Navigator
+    screenOptions={{
+      tabBarLabelStyle: {
+         fontSize: 12, 
+         fontWeight: "bold",
+         textTransform: "none",
+         color: "#064451"
+        },
+      tabBarStyle: { 
+        borderBottomRightRadius: 40,
+        borderBottomLeftRadius: 40,
+       },
+       tabBarIndicatorStyle:{
+         backgroundColor: "#064451",
+         width: 100,
+         marginHorizontal: 40,
+       },
+    }}
+    >
+        <ProfileStack.Screen name="Admin Profile" 
+        component={AdminProfileScreen} />
+        <ProfileStack.Screen name="business Profile" component={BusinessProfileScreen}  />
+    </MaterialTopTabs.Navigator>
   )
 }
 
@@ -124,7 +171,48 @@ export default function App() {
         <Stack.Screen name="Splash" component={HomeScreen} options={{header: () => null}} />
         <Stack.Screen name="SignupScreen" component={SignupScreen} options={{header: () => null}} />
         <Stack.Screen name="LoginScreen" component={LoginScreen} options={{header: () => null}} />
-        <Stack.Screen name="BusinessProfileScreen" component={BusinessProfileScreen} />
+        <Stack.Screen 
+        name="AdminEdit" 
+        component={AdminEdit}
+        options={{
+          title: 'Edit Admin profile',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            color: "white",
+            fontWeight: "700",
+            fontSize: 40,
+            padding: 20,
+          },
+          headerStyle: {
+            height: 140,
+            backgroundColor: '#064451',
+            shadowColor: '#064451',
+            elevation: 0,
+            borderBottomLeftRadius: 20,
+            borderBottomRightRadius: 20,
+          },
+        }}
+         />
+        <Stack.Screen 
+        name="BusineEdit" 
+        component={BusineEdit} 
+        options={{
+          title: "Edit Business Profile",
+          headerBackTitleVisible: false,
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            color: "white",
+            fontWeight: "600"
+          },
+          headerStyle: {
+            backgroundColor: '#064451',
+            shadowColor: '#064451',
+            elevation: 0,
+            height: 200
+          },
+        }} 
+        />
+        <Stack.Screen name="BusinessProfileScreen" component={TabScreen2} />
         <Stack.Screen name="DashBoadScreen" component={TabScreen} options={{header: () => null}} />
         <Stack.Screen name="HistoryScreen" 
         component={HistoryScreen}
