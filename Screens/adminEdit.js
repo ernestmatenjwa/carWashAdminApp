@@ -8,6 +8,7 @@ import img from "../assets/pictures/person.png"
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
+
 const { width, height }= Dimensions.get("screen");
 
 export default function AdminEdit({ navigation }) {
@@ -19,6 +20,7 @@ export default function AdminEdit({ navigation }) {
     <View style = {{justifyContent:'center',alignItems:'center', width:"100%", marginTop: "1%", marginBottom: "0%"}}>          
        <Image source={img} style={styles.UserImg} /> 
     </View>
+    
     <Text style = {styles.text_header}>Alex Mathenjwa </Text>
     <Text style={styles.text_footer}>Full Name</Text>
     <Input 
