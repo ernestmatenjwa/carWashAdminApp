@@ -33,11 +33,11 @@ export default function DashBoadScreen({ navigation }) {
       </TouchableOpacity>   
       <TouchableOpacity 
       style={styles.inner}
-      onPress={() =>  navigation.push("BusinessPageScreen")}
+      onPress={() =>  navigation.push("VehicleTypeScreen")}
       >
         <View style={{width: 100, height: 80, borderRadius:10, marginTop:30, alignItems:"center"}}>
            <Iconicons name={"folder-outline"} size={25} color={"#064451"} />
-           <Text style={{color: "#064451", fontWeight: "bold", fontSize: 15, padding: 5, textAlign: "center" }}>Business Page</Text>
+           <Text style={{color: "#064451", fontWeight: "bold", fontSize: 15, padding: 5, textAlign: "center" }}>Vehicle Type</Text>
         </View>
         
       </TouchableOpacity>   

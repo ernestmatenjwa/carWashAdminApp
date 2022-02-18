@@ -171,47 +171,8 @@ export default function App() {
         <Stack.Screen name="Splash" component={HomeScreen} options={{header: () => null}} />
         <Stack.Screen name="SignupScreen" component={SignupScreen} options={{header: () => null}} />
         <Stack.Screen name="LoginScreen" component={LoginScreen} options={{header: () => null}} />
-        <Stack.Screen 
-        name="AdminEdit" 
-        component={AdminEdit}
-        options={{
-          title: 'Edit Admin profile',
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            color: "white",
-            fontWeight: "200",
-            fontSize: 20,
-            padding: 20,
-          },
-          headerStyle: {
-            height: 140,
-            backgroundColor: '#064451',
-            shadowColor: '#064451',
-            elevation: 0,
-            borderBottomLeftRadius: 20,
-            borderBottomRightRadius: 20,
-          },
-        }}
-         />
-        <Stack.Screen 
-        name="BusineEdit" 
-        component={BusineEdit} 
-        options={{
-          title: "Edit Business Profile",
-          headerBackTitleVisible: false,
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            color: "white",
-            fontWeight: "600"
-          },
-          headerStyle: {
-            backgroundColor: '#064451',
-            shadowColor: '#064451',
-            elevation: 0,
-            height: 200
-          },
-        }} 
-        />
+        <Stack.Screen name="AdminEdit" component={AdminEdit} options={{header: () => null}} />
+        <Stack.Screen name="BusineEdit" component={BusineEdit} options={{header: () => null}} />
         <Stack.Screen name="BusinessProfileScreen" component={TabScreen2} />
         <Stack.Screen name="DashBoadScreen" component={TabScreen} options={{header: () => null}} />
         <Stack.Screen name="HistoryScreen" 
@@ -269,8 +230,8 @@ export default function App() {
         <Stack.Screen name="InformationScreen" component={InformationScreen} />
         <Stack.Screen name="DocumentsScreen" component={DocumentsScreen} options={{header: () => null}}/>
         <Stack.Screen name="StaffScreen" component={StaffScreen} />
-        <Stack.Screen name="VehicleTypeScreen" component={VehicleTypeScreen} />
-        <Stack.Screen name="BusinessPageScreen" component={BusinessPageScreen} />
+        <Stack.Screen name="VehicleTypeScreen" component={VehicleTypeScreen} options={{header: () => null}} />
+        {/* <Stack.Screen name="BusinessPageScreen" component={TabScreen2} options={{header: () => null}} /> */}
     </Stack.Navigator>
   </NavigationContainer>
   );

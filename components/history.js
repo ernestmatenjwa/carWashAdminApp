@@ -50,31 +50,11 @@ const HistoricalData = () => {
   return (
     <>
       <View marginVertical={5} marginHorizontal={15}>
-        <TimeDate>
-          <McText body3 style={{color: COLORS.gray, fontSize: 9}}>{'13:30 '} {' 11 June'}</McText>
-        </TimeDate>
-        <FirstRow style={{flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
-          <McText body3 style={{color: COLORS.black}}>{'BMW '}-{' WWE 123 GP'}</McText>
-          <McText body3 style={{color: COLORS.black}}>{'Car '}-{' Full Wash'}</McText>
-        </FirstRow>
-        <SecondRow style={{flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
-          <McText body3 style={{color: COLORS.black}}>{'Kutlono Ramonti'}</McText>
-          <McText h3 style={{color: '#0B6F83'}}>R {120.00}</McText>
-        </SecondRow>
+    
       </View>
 
       <View marginVertical={5} marginHorizontal={15}>
-        <TimeDate>
-          <McText body3 style={{color: COLORS.gray, fontSize: 9}}>{'13:30 '} {' 11 June'}</McText>
-        </TimeDate>
-        <FirstRow style={{flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
-          <McText body3 style={{color: COLORS.black}}>{'BMW '}-{' WWE 123 GP'}</McText>
-          <McText body3 style={{color: COLORS.black}}>{'Car '}-{' Full Wash'}</McText>
-        </FirstRow>
-        <SecondRow style={{flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
-          <McText body3 style={{color: COLORS.black}}>{'Kutlono Ramonti'}</McText>
-          <McText h3 style={{color: '#0B6F83'}}>R {120.00}</McText>
-        </SecondRow>
+        
       </View>
     </>
 
@@ -106,8 +86,8 @@ const DetailBox = styled.View`
   border-radius: ${SIZES.radius};
   background-color: ${COLORS.white};
   elevation: 12;
-  top: -80;
-  left: 20;
+  top: -80px;
+  left: 20px;
   padding: 10px;
 `;
 

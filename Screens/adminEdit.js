@@ -6,7 +6,7 @@ import {LinearGradient} from 'expo-linear-gradient';
 import { Input } from 'react-native-elements';
 import img from "../assets/pictures/person.png"
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import Icon1 from 'react-native-vector-icons/MaterialIcons';
 
 const { width, height }= Dimensions.get("screen");
 
@@ -16,6 +16,10 @@ export default function AdminEdit({ navigation }) {
 //   const [phone, onChangePhone] = React.useState('');
   return (
     <View style = {styles.container}>
+         <View style={{height: height/4.8, backgroundColor: "#064451", width: width, borderBottomLeftRadius: 20, borderBottomRightRadius: 20}}>
+        <Icon1 name='arrow-back' size={28} onPress={() => navigation.goBack()}  style={{color: "white", margin: "5%"}}/>
+           <Text style={{color: "white", paddingTop: "2%", fontSize:50, fontWeight:"700", alignSelf: "center"}}>Edit Profile</Text>
+        </View>
     <View style = {{justifyContent:'center',alignItems:'center', width:"100%", marginTop: "1%", marginBottom: "0%"}}>          
        <Image source={img} style={styles.UserImg} /> 
     </View>
@@ -48,7 +52,7 @@ export default function AdminEdit({ navigation }) {
         rightIcon={ <Icon size={24} 
         style={styles.icon} name='phone'/>}
     />
-    <View style={styles.button}> 
+    <View style={[styles.button, {padding: 10, marginTop: "-5%"}]}> 
         <LinearGradient
            colors={['#064451', '#064451']}
            style={styles.signIn}
@@ -65,7 +69,7 @@ const styles = StyleSheet.create({
       flex: 1, 
       //width: width,
       //backgroundColor: '#009387'
-      padding: 10
+      //padding: 10
     },
     icon: {
         color: "#064451",
