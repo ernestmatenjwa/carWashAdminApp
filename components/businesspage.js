@@ -1,138 +1,84 @@
 import * as React from 'react';
-import { Text,  ImageBackground, StyleSheet, View, TextInput,TouchableOpacity } from 'react-native';
+import { Text,  Dimensions, StyleSheet, View, Image,TouchableOpacity } from 'react-native';
 import { StatusBar } from "expo-status-bar";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {LinearGradient} from 'expo-linear-gradient';
+import { Input } from 'react-native-elements';
+import img from "../assets/pictures/person.png"
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
-const image = { uri: "https://th.bing.com/th/id/OIP.p2Q3PvICv3cCa1XnpVlnKAHaE7?w=286&h=190&c=7&r=0&o=5&pid=1.7" };
+const { width, height }= Dimensions.get("screen");
 
 export default function BusinessPageScreen({ navigation }) {
+    const [text, onChangeText] = React.useState('');
   return (
     <View style = {styles.container}>
+    <View style = {{justifyContent:'center',alignItems:'center', width:"100%", }}>          
+       <Image source={img} style={styles.UserImg} /> 
+    </View>
+    <Text style = {styles.text_header}>Alex Mathenjwa </Text>
+    <Text style={[styles.text_footer, {marginTop:"-10%"}]}>Full Name</Text>
+    <Input 
+        onChangeText={onChangeText} value={text}
+        inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
+        inputStyle ={[styles.inputText, {paddingLeft: 15}]}                
+        placeholder="Alex Mathenjwa"
+        rightIcon={ <Icon size={24} 
+        style={styles.icon} name='user'/>}
+        disabled
+    />
+    
+    <Text style={styles.text_footer}>Email Address</Text>
+    <Input 
+        onChangeText={onChangeText} value={text}
+        inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
+        inputStyle = {[styles.inputText, {paddingLeft: 15}]}
+        placeholder="alexmatenjwa@gmail.com"
+        rightIcon={ <Icon size={24} 
+        style={styles.icon} name='envelope'/>}
+        disabled
+    />
+    <Text style={styles.text_footer}>Phone</Text>
+    <Input 
+        onChangeText={onChangeText} value={text}
+        inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
+        inputStyle = {[styles.inputText, {paddingLeft: 15}]}               
+        placeholder="0729476167"
+        rightIcon={ <Icon size={24} 
+        style={styles.icon} name='phone'/>}
+        disabled
+    />
+    <View style={styles.button}> 
+        <LinearGradient
         
-      <StatusBar backgroundColor="#009387" barStyle="light-content"/>
-
-
-      <View style={{height:250, backgroundColor:'#eeeeee', borderRadius:20}}>
-     
-          <View style={{height:180, marginTop:22, borderRadius:20,alignItems:'center',justifyContent:'center'}}>
-          <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-      <Text style={styles.text}>Business Page</Text>
-    </ImageBackground>
-
-          </View>
-
-          <View style={{flexDirection:'row', justifyContent:'space-around'}}>
-                  <Text>admin profile </Text>
-                  <Text style={styles.text_footer} >business profile</Text>
-              </View>
-      </View>
- 
-
-          <View style={styles.footer}>
-
-              <Text>Edit business Profile</Text>
-
-         
-
-              <View style = {{justifyContent:'center',alignItems:'center', width:"100%"}}>
-             
-   < FontAwesome 
-     name = "user-circle"
-     color = "#05375a"
-     size = {50}
-   
-     />
-              </View>
-
-              
-              <Text style = {styles.text_header}>Add business Logo </Text>
-
-              <Text style={styles.text_footer}> Business Name</Text>
-
-<View style={styles.action}>
-<View style={{position:'absolute' ,left:280, top:5}}>
-
-   < FontAwesome 
-     name = "envelope"
-     color = "#05375a"
-     size = {20}
-   
-     />
-</View>
-     <TextInput
-     placeholder="4 The Dead Business Palour Pty Ltd"
-     styles={styles.textInput}
-     autoCapitalize="none"
-     />
-  
-</View>
-             <Text style={styles.text_footer}> Busness Location</Text>
-
-             <View style={styles.action}>
-             <View style={{position:'absolute' ,left:280, top:5}}>
-
-                < FontAwesome 
-                  name = "map-marker"
-                  color = "#05375a"
-                  size = {20}
-                
-                  />
-             </View>
-                  <TextInput
-                  placeholder="14 Corpse Street,Parktown"
-                  styles={styles.textInput}
-                  autoCapitalize="none"
-                  />
-               
-             </View>
-
-           
-            
-
-             
-             <View style={styles.button}> 
-
-             <LinearGradient
-                    colors={['#064451', '#064451']}
-                    style={styles.signIn}
-                >
-                    <Text style={[styles.textSign, {
-                        color:'#fff'
-                    }]}>Submit</Text>
-                </LinearGradient>
-                
-
-                <TouchableOpacity
-                   onPress={() => {
-                    navigation.navigate("VihicletypeScreen");
-                  }}
-                    
-                >
-                   
-                </TouchableOpacity>
-               
-               
-
-
-             </View>
-        </View>
-      
-      
-   
-
-      
-
+           colors={['#064451', '#064451']}
+           style={styles.signIn}
+        ><Text style={[
+            styles.textSign, 
+            {color:'#fff'}]}
+            onPress={() =>  navigation.push("AdminEdit")}
+            >Edit</Text>
+        </LinearGradient>
+    </View> 
     </View>
   );
 }
 const styles = StyleSheet.create({
     container: {
       flex: 1, 
-      backgroundColor: '#009387'
- 
+      width: width,
+      //backgroundColor: '#009387'
+      padding: 10
     },
+    icon: {
+        color: "#064451",
+    },
+    UserImg: {
+        width: 90,
+        height: 90,
+        borderRadius: 25,
+      },
     header: {
         flex: 1,
         justifyContent: 'flex-end',
@@ -162,8 +108,9 @@ const styles = StyleSheet.create({
         paddingBottom:30
     },
     text_footer: {
-        color: '#05375a',
-        fontSize: 15
+        color: '#064451',
+        fontSize: 18,
+        paddingTop: 0,
     },
     action: {
         flexDirection: 'row',
@@ -198,16 +145,16 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
     button: {
-        alignItems: 'center',
-        marginTop: 35
+        alignItems: 'flex-end',
+        marginTop: "-5%"
     },
     signIn: {
-        width: '100%',
+        width: '30%',
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
-        
+        //marginTop: "1%"
     },
     textSign: {
         fontSize: 18,
