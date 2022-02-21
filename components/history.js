@@ -20,7 +20,7 @@ const History = () => {
   
   const _renderItem = ({item, index}) => {
     return (
-      <View marginVertical={5} marginHorizontal={15}>
+      <View marginVertical={10} marginHorizontal={15}>
         <TimeDate>
           <McText body3 style={{color: COLORS.gray, fontSize: 9}}>{item.date}{' '}{item.time}</McText>
         </TimeDate>
@@ -30,7 +30,7 @@ const History = () => {
         </FirstRow>
         <SecondRow style={{flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
           <McText body3 style={{color: COLORS.black}}>{item.customerName}</McText>
-          <McText h3 style={{color: '#0B6F83'}}>R {item.price}</McText>
+          <McText h3 style={{color: '#0B6F83', fontWeight: 'bold'}}>R {item.price}</McText>
         </SecondRow>
       </View>
     )
@@ -48,8 +48,6 @@ const History = () => {
           }}
           imageStyle= {{opacity:0.5}}
         >
-          <McIcon source={icons.back_arrow} size={24} color='#fff' top={25} marginLeft={20}/>
-          <McText h1 style={{left: '35%' }}>History</McText>
         </ImageBackground>
       </SectionHeader> 
       <DetailBox >
