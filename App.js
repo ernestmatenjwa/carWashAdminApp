@@ -175,22 +175,7 @@ export default function App() {
         <Stack.Screen name="BusineEdit" component={BusineEdit} options={{header: () => null}} />
         <Stack.Screen name="BusinessProfileScreen" component={TabScreen2} />
         <Stack.Screen name="DashBoadScreen" component={TabScreen} options={{header: () => null}} />
-        <Stack.Screen name="HistoryScreen" 
-        component={HistoryScreen}
-        options={({route}) => ({
-          title: "History",
-          headerBackTitleVisible: false,
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            color: "white",
-            fontWeight: "600"
-          },
-          headerStyle: {
-            backgroundColor: '#064451',
-            shadowColor: '#064451',
-            elevation: 0,
-          },
-        })}
+        <Stack.Screen name="HistoryScreen" component={HistoryScreen} options={{header: () => null}}
         />
         <Stack.Screen 
           name="RequestScreen" 

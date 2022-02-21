@@ -50,8 +50,7 @@ export default function AdminProfileScreen({ navigation }) {
         disabled
     />
     <View style={styles.button}> 
-        <LinearGradient
-        
+        <LinearGradient       
            colors={['#064451', '#064451']}
            style={styles.signIn}
         ><Text style={[
@@ -66,10 +65,9 @@ export default function AdminProfileScreen({ navigation }) {
 }
 const styles = StyleSheet.create({
     container: {
-      flex: 1, 
-      width: width,
-      //backgroundColor: '#009387'
-      padding: 10
+        flex: 1,
+        //alignItems: 'center',
+        justifyContent: 'center',
     },
     icon: {
         color: "#064451",

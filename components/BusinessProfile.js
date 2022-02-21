@@ -56,10 +56,9 @@ export default function BusinessProfileScreen({ navigation }) {
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
-    width: width,
-    //backgroundColor: '#009387'
-    padding: 10
+    flex: 1,
+        //alignItems: 'center',
+        justifyContent: 'center',
   },
   icon: {
       color: "#064451",
