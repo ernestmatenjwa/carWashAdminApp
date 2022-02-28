@@ -1,108 +1,103 @@
 import React, {useState} from 'react';
-import { SafeAreaView, Alert, useWindowDimensions, Text, Pressable, ImageBackground, StyleSheet, View } from 'react-native';
-import gbImage from './../assets/pictures/homeBG3.jpg';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { Input } from 'react-native-elements';
+import {View, Text, StyleSheet, ImageBackground, Alert, Pressable, SafeAreaView} from 'react-native';
 import CustomInput from '../src/componets/CustomInput';
+
+import gbImage from './../assets/pictures/homeBG3.jpg';
+//import CustomButton from '../../components/CustomButton';
+//import SocialSignInButtons from '../../components/SocialSignInButtons';
+import {useNavigation} from '@react-navigation/core';
 import {useForm} from 'react-hook-form';
 import {Auth} from 'aws-amplify';
 
-export default function LoginScreen({ navigation }) {
+const ForgotPasswordScreen = () => {
+  const {control, handleSubmit} = useForm();
+  const navigation = useNavigation();
 
-  const [email, onChangeEmail] = React.useState('');
-  const [password, onChangePassword] = React.useState('');
-
-  const {height} = useWindowDimensions();
-  //const navigation = useNavigation();
-  const [loading, setLoading] = useState(false);
-
-  const {
-    control,
-    handleSubmit,
-    formState: {errors},
-  } = useForm();
-  
-  const onSignInPressed = async data => {
-    if (loading) {
-      return;
-    }
-
-    setLoading(true);
+  const onSendPressed = async data => {
     try {
-      const response = await Auth.signIn(data.username, data.password);
-      //console.log(response);
-      navigation.navigate('DashBoadScreen');
+      await Auth.forgotPassword(data.username);
+      navigation.navigate('NewPasswordScreen');
     } catch (e) {
       Alert.alert('Oops', e.message);
     }
-    setLoading(false);
+  };
+
+  const onSignInPress = () => {
+    navigation.navigate('LoginScreen');
   };
 
   return (
+
     <ImageBackground source={gbImage}  style={styles.container}>
-      <View style={styles.frame}>
-          <Text style={styles.title}>Log In</Text>
-          <SafeAreaView>
-            <Text style={styles.label}>Email Address</Text> 
-            <CustomInput
+    <View style={styles.frame}>
+        <Text style={styles.title}>Reset your password</Text>
+        <SafeAreaView>
+          <Text style={styles.label}>Username</Text> 
+          <CustomInput
           name="username"
-          placeholder="Username"
           control={control}
-          rules={{required: 'Username is required'}}
-        />
-            <Text style={styles.label}>Password</Text> 
-            <CustomInput
-          name="password"
-          placeholder="Password"
-          secureTextEntry
-          control={control}
+          placeholder="Enter username"
           rules={{
-            required: 'Password is required',
-            minLength: {
-              value: 8,
-              message: 'Password should be minimum 8 characters long',
-            },
+            required: 'Username is required',
           }}
         />
-            <Pressable
-            onPress={() => {
-              navigation.navigate("ForgotPasswordScreen");
-             }}>
-            <Text>Forgot Password?</Text>
-              </Pressable>
-            <View style={styles.space} /> 
-            <Pressable 
-               style={styles.login} 
-               onPress={handleSubmit(onSignInPressed)}>
-             <Text style={styles.text}>Log In</Text>
-            </Pressable> 
-            <View style={styles.space} />
-            <Pressable 
-               style={styles.loginG} 
-               onPress={() => {
-              //  Sign in with Google
-              }}>
-             <Text style={styles.text}>Log in with google+ </Text>
-            </Pressable>
-            <View style={styles.space} />     
-            <Text style={styles.label}> Don't have an account?
-             <Pressable style={styles.label}
-                onPress={() => {
-                  navigation.navigate("SignupScreen");
-                 }}>
-                <Text style={styles.link}>Sign up</Text>
-              </Pressable>
-            </Text> 
-            <View style={styles.space} />
+          
+          <View style={styles.space} /> 
+          <Pressable 
+             style={styles.login} 
+             onPress={handleSubmit(onSendPressed)}>
+           <Text style={styles.text}>Send</Text>
+          </Pressable> 
+          <View style={styles.space} />     
+          <Text style={styles.label}
+          onPress={onSignInPress}
+          > Back to sign in</Text> 
+        </SafeAreaView>
+    </View>
+  </ImageBackground>
+    // <ScrollView showsVerticalScrollIndicator={false}>
+    //   <View style={styles.root}>
+    //     <Text style={styles.title}>Reset your password</Text>
 
-            {/* Social Icons */}
-          </SafeAreaView>
-      </View>
-    </ImageBackground>
+    //     <CustomInput
+    //       name="username"
+    //       control={control}
+    //       placeholder="Username"
+    //       rules={{
+    //         required: 'Username is required',
+    //       }}
+    //     />
+
+    //     <CustomButton text="Send" onPress={handleSubmit(onSendPressed)} />
+
+    //     <CustomButton
+    //       text="Back to Sign in"
+    //       onPress={onSignInPress}
+    //       type="TERTIARY"
+    //     />
+    //   </View>
+    // </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  root: {
+    alignItems: 'center',
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#051C60',
+    margin: 10,
+  },
+  text: {
+    color: 'gray',
+    marginVertical: 10,
+  },
+  link: {
+    color: '#FDB075',
+  },
   input: {
     height: 50,
     margin: 12,
@@ -229,3 +224,5 @@ const styles = StyleSheet.create({
     flexWrap: 'nowrap'
   }
 });
+
+export default ForgotPasswordScreen;

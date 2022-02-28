@@ -6,24 +6,56 @@ import {LinearGradient} from 'expo-linear-gradient';
 import { Input } from 'react-native-elements';
 import img from "../assets/pictures/person.png"
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import { API, graphqlOperation, Auth } from "aws-amplify";
+import { getAdmin } from '../src/graphql/queries';
 
 const { width, height }= Dimensions.get("screen");
 
 export default function AdminProfileScreen({ navigation }) {
     const [text, onChangeText] = React.useState('');
+    const [user, setUser] = React.useState([]);
+    const [profile, setProfile] = React.useState([]);
+    const [idd, setIdd] = React.useState([]);
+
+    React.useEffect(() => {
+        const getProfile = async (e) => {
+             //e.preventDefault();
+             console.log('called11', idd);
+             try{
+               console.log('try');
+              const userData = await API.graphql(graphqlOperation(getAdmin, {id: "e3ac1eb9-5e11-4646-b367-6d9eadae3340"}));
+              console.log('yes22 ', userData);
+             // console.log('>> ', profile.data?.data.getUserByEmail.name, '<<');
+              setProfile({data: userData})
+                } catch (e) {
+                    console.log('error getting user 22', e);  
+                } 
+       }
+           function loadUser() { 
+               return Auth.currentAuthenticatedUser({bypassCache: true});
+           }
+           async function onLoad() {
+               try {
+                   const user = await loadUser();
+                   setUser(user.attributes);
+               }catch (e) {
+                   alert(e)
+               }
+           }
+           onLoad();
+           getProfile();
+       }, []);
   return (
     <View style = {styles.container}>
     <View style = {{justifyContent:'center',alignItems:'center', width:"100%", }}>          
        <Image source={img} style={styles.UserImg} /> 
     </View>
-    <Text style = {styles.text_header}>Alex Mathenjwa </Text>
+    <Text style = {styles.text_header}>{profile.data?.data.getAdmin.name}</Text>
     <Text style={[styles.text_footer, {marginTop:"-10%"}]}>Full Name</Text>
     <Input 
-        onChangeText={onChangeText} value={text}
+        onChangeText={onChangeText} value={profile.data?.data.getAdmin.name}
         inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
         inputStyle ={[styles.inputText, {paddingLeft: 15}]}                
-        placeholder="Alex Mathenjwa"
         rightIcon={ <Icon size={24} 
         style={styles.icon} name='user'/>}
         disabled
@@ -31,20 +63,18 @@ export default function AdminProfileScreen({ navigation }) {
     
     <Text style={styles.text_footer}>Email Address</Text>
     <Input 
-        onChangeText={onChangeText} value={text}
+        onChangeText={onChangeText} value={profile.data?.data.getAdmin.email}
         inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
         inputStyle = {[styles.inputText, {paddingLeft: 15}]}
-        placeholder="alexmatenjwa@gmail.com"
         rightIcon={ <Icon size={24} 
         style={styles.icon} name='envelope'/>}
         disabled
     />
     <Text style={styles.text_footer}>Phone</Text>
     <Input 
-        onChangeText={onChangeText} value={text}
+        onChangeText={onChangeText} value={profile.data?.data.getAdmin.phone}
         inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
         inputStyle = {[styles.inputText, {paddingLeft: 15}]}               
-        placeholder="0729476167"
         rightIcon={ <Icon size={24} 
         style={styles.icon} name='phone'/>}
         disabled

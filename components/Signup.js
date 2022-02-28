@@ -1,61 +1,101 @@
-import * as React from 'react';
-import { SafeAreaView, TextInput, Text, Pressable, ImageBackground, StyleSheet, View } from 'react-native';
+import React, {useState} from 'react';
+import { SafeAreaView, Alert, Text, Pressable, ImageBackground, StyleSheet, View } from 'react-native';
 import gbImage from './../assets/pictures/homeBG3.jpg';
-
+import CustomInput from '../src/componets/CustomInput';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Input } from 'react-native-elements';
+import {useForm} from 'react-hook-form';
+import { Auth } from 'aws-amplify';
+
 
 export default function SignupScreen({ navigation }) {
-  const [text, onChangeText] = React.useState('');
-  const [email, onChangeEmail] = React.useState('');
-  const [number, onChangeNumber] = React.useState('');
-  const [password, onChangePassword] = React.useState('');
-  
+  const {control, handleSubmit, watch} = useForm();
+  // const [username, setUsername] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [phone_number, setPhone_number] = useState('');
+
+  const onRegisterPressed = async data => {
+    const {username, password, email, phone_number} = data;
+    try {
+      await Auth.signUp({
+        username,
+        password,
+        attributes: {email, phone_number, preferred_username: username},
+      });
+      navigation.navigate('ConfirmEmailScreen', {username});
+    } catch (e) {
+      Alert.alert('Oops', e.message);
+    }
+  };
+
   return (
     <ImageBackground source={gbImage}  style={styles.container}>
       <View style={styles.frame}>
         <Text style={styles.title}>Sign Up</Text>
         <SafeAreaView>  
           <Text style={styles.label}>Full Name</Text> 
-          <Input 
-            onChangeText={onChangeText} value={text}
-            inputContainerStyle={styles.inputContainer}
-            inputStyle ={styles.inputText}                
-            placeholder="Karabo Seheri"
-            rightIcon={<Icon size={24} 
-            style={styles.icon} name='user'/>}
-          />
+          <CustomInput
+          name="username"
+          control={control}
+          placeholder="Username"
+          rightIcon={<Icon size={24} 
+          style={styles.icon} name='user'/>}
+          rules={{
+            required: 'Username is required',
+            minLength: {
+              value: 3,
+              message: 'Username should be at least 3 characters long',
+            },
+            maxLength: {
+              value: 24,
+              message: 'Username should be max 24 characters long',
+            },
+          }}
+        />
           <Text style={styles.label}>Email Address</Text> 
-          <Input 
-            onChangeText={onChangeEmail} value={email}
-            inputContainerStyle={styles.inputContainer}
-            inputStyle ={styles.inputText}                
-            placeholder="gomo@gmail.com"
-            rightIcon={<Icon size={24} style={styles.icon} name='envelope'/>}
-          />
+          <CustomInput
+          name="email"
+          control={control}
+          placeholder="Email"
+          rightIcon={<Icon size={24} style={styles.icon} name='envelope'/>}
+          rules={{
+            required: 'Email is required',
+            // pattern: {value: EMAIL_REGEX, message: 'Email is invalid'},
+          }}
+        />
 
           <Text style={styles.label}>Phone Number</Text> 
-          <Input 
-            onChangeText={onChangeNumber} 
-            value={number}
-            inputContainerStyle={styles.inputContainer}
-            inputStyle ={styles.inputText}                
-            placeholder="+27 71 004 2020" keyboardType="numeric"
-            rightIcon={<Icon size={24} 
+          <CustomInput
+          name="phone_number"
+          control={control}
+          placeholder="Enter phone number"
+          rightIcon={<Icon size={24} 
             style={styles.icon} name='phone'/>}
-          />
+          rules={{
+            required: 'Phone number is required',
+            minLength: {
+              value: 10,
+              message: 'Phone should be at least 10 characters long',
+            },
+          }}
+        />
 
           <Text style={styles.label}>Password</Text> 
-          <Input  secureTextEntry={true}
-            onChangeText={onChangePassword} 
-            value={password}
-            inputContainerStyle={styles.inputContainer}
-            inputStyle ={styles.inputText}
-            type="password"
-            placeholder="Password"
-            rightIcon={<Icon size={28} 
+          <CustomInput
+          name="password"
+          control={control}
+          placeholder="Password"
+          rightIcon={<Icon size={28} 
             style={styles.icon} name='lock'/>} 
-          />
+          secureTextEntry
+          rules={{
+            required: 'Password is required',
+            minLength: {
+              value: 8,
+              message: 'Password should be at least 8 characters long',
+            },
+          }}
+        />
 
            <Text style={styles.label}>
              Already have an account?
@@ -70,9 +110,7 @@ export default function SignupScreen({ navigation }) {
             <View style={styles.space} />
             <Pressable 
                style={styles.login} 
-               onPress={() => {
-              navigation.navigate("DashBoadScreen");
-            }}>
+               onPress={handleSubmit(onRegisterPressed)}>
               <Text style={styles.text}>Create Account</Text>
             </Pressable>
  
