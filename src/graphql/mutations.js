@@ -17,6 +17,7 @@ export const createAdmin = /* GraphQL */ `
           id
           name
           location
+          Desc
           imageUrl
           createdAt
           updatedAt
@@ -47,6 +48,7 @@ export const updateAdmin = /* GraphQL */ `
           id
           name
           location
+          Desc
           imageUrl
           createdAt
           updatedAt
@@ -77,6 +79,7 @@ export const deleteAdmin = /* GraphQL */ `
           id
           name
           location
+          Desc
           imageUrl
           createdAt
           updatedAt
@@ -100,6 +103,7 @@ export const createCarwash = /* GraphQL */ `
       id
       name
       location
+      Desc
       imageUrl
       createdAt
       updatedAt
@@ -117,6 +121,7 @@ export const updateCarwash = /* GraphQL */ `
       id
       name
       location
+      Desc
       imageUrl
       createdAt
       updatedAt
@@ -134,6 +139,7 @@ export const deleteCarwash = /* GraphQL */ `
       id
       name
       location
+      Desc
       imageUrl
       createdAt
       updatedAt

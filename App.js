@@ -17,9 +17,9 @@ import VehicleTypeScreen from "./components/vehicletype";
 import BusinessPageScreen from "./components/businesspage";
 import AdminEdit from "./Screens/adminEdit";
 import BusineEdit from "./Screens/busEdit";
-import ConfirmEmailScreen from "./Screens/ConfirmEmailScreen"
-import ForgotPasswordScreen from "./Screens/ForgotPasswordScreen"
-import NewPasswordScreen from "./Screens/NewPasswordScreen"
+import ConfirmEmailScreen from "./components/ConfirmEmailScreen.js"
+import ForgotPasswordScreen from "./components/ForgotPasswordScreen"
+import NewPasswordScreen from "./components/NewPasswordScreen"
 
 import Iconicons from "react-native-vector-icons/Ionicons"
 import { NavigationContainer } from "@react-navigation/native";

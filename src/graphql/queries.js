@@ -14,6 +14,7 @@ export const getAdmin = /* GraphQL */ `
           id
           name
           location
+          Desc
           imageUrl
           createdAt
           updatedAt
@@ -58,6 +59,7 @@ export const getCarwash = /* GraphQL */ `
       id
       name
       location
+      Desc
       imageUrl
       createdAt
       updatedAt
@@ -77,6 +79,7 @@ export const listCarwashes = /* GraphQL */ `
         id
         name
         location
+        Desc
         imageUrl
         createdAt
         updatedAt

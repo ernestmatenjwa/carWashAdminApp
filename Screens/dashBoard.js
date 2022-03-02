@@ -39,7 +39,7 @@ export default function DashBoadScreen({ navigation }) {
             )
         )
         if (userData.data.getAdmin) {
-          console.log("User is already registered in database");
+          //console.log("User is already registered in database");
           return;
         }
         const newUser = {

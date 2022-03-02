@@ -10,6 +10,7 @@ type Carwash @model @auth(rules: [{ allow: owner }]){
   id: ID!
   name: String
   location: String
+  Desc: String
   imageUrl: String
 }
 type User @model @auth(rules: [{ allow: owner }]) {
@@ -19,3 +20,4 @@ type User @model @auth(rules: [{ allow: owner }]) {
   phone: String!
   imageUrl: String
 }
+
