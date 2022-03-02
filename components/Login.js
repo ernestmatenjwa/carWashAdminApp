@@ -63,7 +63,7 @@ export default function LoginScreen({ navigation }) {
         />
            <Pressable style={styles.label}
                 onPress={() => {
-                navigation.navigate("ForgotPassword");
+                navigation.navigate("ForgotPasswordScreen");
                 }}>
                 <Text style={styles.textBody}>Forgot Password?</Text>
           </Pressable>

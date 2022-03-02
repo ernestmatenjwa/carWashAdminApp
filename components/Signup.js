@@ -35,14 +35,14 @@ export default function SignupScreen({ navigation }) {
       });
       
       Alert.alert('Success','Hi '+ username +' your account has been created successful. \n Please check your email to verify your account!');
-      navigation.navigate('ConfirmEmail',{username});
+      navigation.navigate('ConfirmEmailScreen',{username});
     }
     catch(e){
       Alert.alert('Error',e.message);
       console.log(e.message);
       if(e.message === 'User already exists')
       {
-        navigation.navigate('SignIn');
+        navigation.navigate('LoginScreen');
       }
 
     }
@@ -130,7 +130,7 @@ export default function SignupScreen({ navigation }) {
              Already have an account?
              <Pressable style={styles.label}
                onPress={() => {
-               navigation.navigate("SignIn");
+               navigation.navigate("LoginScreen");
               }}>
              <Text style={styles.link}>Sign In</Text>
              </Pressable>
