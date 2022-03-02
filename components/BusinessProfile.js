@@ -1,29 +1,183 @@
 import * as React from 'react';
-import { Text,  Dimensions, StyleSheet, View, Image,TouchableOpacity } from 'react-native';
+import { Text,  Dimensions, TextInput, Pressable, StyleSheet, View, Image,TouchableOpacity } from 'react-native';
 import { StatusBar } from "expo-status-bar";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {LinearGradient} from 'expo-linear-gradient';
 import { Input } from 'react-native-elements';
 import img from "../assets/pictures/person.png"
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import { getCarwash } from '../src/graphql/queries';
+import { createCarwash } from '../src/graphql/mutations';
+import Modal from "react-native-modal";
+//import CustomInput from '../CustomInput/CustomInput';
+import {useForm} from 'react-hook-form';
+import {
+    Auth, 
+    API,
+    graphqlOperation,
+  } from 'aws-amplify';
 
 const { width, height }= Dimensions.get("screen");
 
 export default function BusinessProfileScreen({ navigation }) {
   //const [text, onChangeText] = React.useState('');
+  //const [fill, setFill] = React.useState(0);
+  const {control, handleSubmit, watch} = useForm();
+  const [user, setUser] = React.useState([]);
+ // const [b_location, setB_Location] = React.useState("");
+  const [bname, setB_Name] = React.useState("");
+  const [imageUrl, setBimageUrl] = React.useState("");
+  const [isModalVisible, setModalVisible] = React.useState(false);
+  const [carwash, setSetCarwash] = React.useState([]);
+
+  const close = () => {
+    setModalVisible(!isModalVisible);
+  };
+  
+  const RegisterCc = async data => {
+    const {  location: b_location, name: bname, imageUrl: imageUrl } = data;
+    const userInfo = await Auth.currentAuthenticatedUser({ bypassCache: true });
+    if(userInfo){
+        const userData = await API.graphql(
+          graphqlOperation(
+            getCarwash,
+            { id: userInfo.attributes.sub }
+            )
+        )
+        if (userData.data.getCarwash) {
+          console.log("User is aalreadyyy registered in database");
+          setModalVisible(false);
+          return;
+        }
+        const newUser = {
+          id: userInfo.attributes.sub,
+          location: data.location,
+          name: data.name,
+          imageUrl: "https://image.shutterstock.com/image-vector/camera-add-icon-260nw-1054194038.jpg",
+        }
+        await API.graphql(
+          graphqlOperation(
+            createCarwash,
+            { input: newUser }
+          )
+        )
+      }
+    
+   /* console.log(data)
+    try{
+        await API.graphql(graphqlOperation(createCarwash, { input: data}));
+        alert('Car wash successfully registered')
+        setModalVisible(false);
+       // window.location.replace('/profile')
+    } catch (e) {
+        console.log('error creating user ', e);
+    }*/
+  };
+//   const handleSubmittt = async (e) => {
+//     e.preventDefault();
+//        const data = { location: b_location, name: bname, imageUrl: imageUrl };
+//          console.log('data', l)
+//        try{
+//            await API.graphql(graphqlOperation(createCarwash, { input: data}));
+//            alert('Car wash successfully registered')
+//            setModalVisible(false);
+//           // window.location.replace('/profile')
+//        } catch (e) {
+//            console.log('error creating user ', e);
+//        }  
+// }
+
+  React.useEffect( () => {
+    console.log("we about to display carwash")
+    const getCarwashDetails = async (e) => {
+      const userInfo = await Auth.currentAuthenticatedUser({ bypassCache: true });
+      const ID = userInfo.attributes.sub
+         //e.preventDefault();
+         console.log('ca++++==', ID);
+         try{
+           //console.log('try');
+          const userData = await API.graphql(graphqlOperation(getCarwash, {id: ID}));
+          console.log('yes22 ', userData);
+         // console.log('>> ', profile.data?.data.getUserByEmail.name, '<<');
+          setSetCarwash({data: userData})
+            } catch (e) {
+                console.log('error getting user 22', e);  
+            } 
+   }
+   getCarwashDetails();
+  }, []) 
   return (
     <View style = {styles.container}>
+        {/*(() => {
+       if (isModalVisible === true){
+      return (
+      <Modal isVisible={isModalVisible} style={{backgroundColor: "white",opacity: 0.8,}}>   
+        <View
+        style={{height:"50%"}}
+        >
+        <Text style={[styles.tit, {alignSelf: "center", color:"green", fontSize: 30, paddingBottom: "10%"}]}>Register Carwash</Text>
+        <Text style={styles.tit}>Business Name</Text>
+        <CustomInput
+          name="name"
+          control={control}
+          placeholder="Enter name"
+          rightIcon={<Icon size={24} 
+          style={styles.icon} name='user'/>}
+          rules={{
+            required: 'Username is required',
+            minLength: {
+              value: 3,
+              message: 'Username should be at least 3 characters long',
+            },
+            maxLength: {
+              value: 24,
+              message: 'Username should be max 24 characters long',
+            },
+          }}
+        />
+          <Text style={styles.tit}>Business Location</Text>
+          <CustomInput
+          name="location"
+          control={control}
+          placeholder="Enter location"
+          rightIcon={<Icon size={24} 
+          style={styles.icon} name='user'/>}
+          rules={{
+            required: 'Username is required',
+            minLength: {
+              value: 3,
+              message: 'Username should be at least 3 characters long',
+            },
+            maxLength: {
+              value: 24,
+              message: 'Username should be max 24 characters long',
+            },
+          }}
+        />
+        </View>
+        <View style={{ alignContent: "center"}}>
+        <Pressable
+        onPress={handleSubmit(RegisterC)}
+        style={{padding: 1, alignSelf: "center",}}
+        ><Text style={{fontSize: 20, fontWeight: "bold", color: "green"}}>SUBMIT</Text></Pressable>
+        </View>
+      </Modal>
+        )
+      }
+      return (
+        null
+      );
+    })()*/}
     <View style = {{justifyContent:'center',alignItems:'center', width:"100%", marginTop: "1%", marginBottom: "0%"}}>          
-       <Image source={img} style={styles.UserImg} /> 
+       <Image source={{uri:carwash.data?.data.getCarwash.imageUrl}} style={styles.UserImg} /> 
     </View>
-    <Text style = {styles.text_header}>Sek'Clean Carwash</Text>
+  
     <Text style={styles.text_footer}>Business Name</Text>
     <Input 
         //onChangeText={onChangeText} value={text}
         inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
         inputStyle ={[styles.inputText, {paddingLeft: 15}]}                
-        placeholder="Sek'Clean Carwash"
+        value={carwash.data?.data.getCarwash.name}
         rightIcon={ <Icon size={24} 
         style={styles.icon} name='home'/>}
         disabled
@@ -34,7 +188,18 @@ export default function BusinessProfileScreen({ navigation }) {
         //onChangeText={onChangeText} value={text}
         inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
         inputStyle = {[styles.inputText, {paddingLeft: 15}]}
-        placeholder="Pretoria, soshanguve"
+        value={carwash.data?.data.getCarwash.location}
+        rightIcon={ <Icon size={24} 
+        style={styles.icon} name='map-marker'/>}
+        disabled
+    />
+
+<Text style={styles.text_footer}>Business Description</Text>
+    <Input 
+        //onChangeText={onChangeText} value={text}
+        inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
+        inputStyle = {[styles.inputText, {paddingLeft: 15}]}
+        value={carwash.data?.data.getCarwash.Desc}
         rightIcon={ <Icon size={24} 
         style={styles.icon} name='map-marker'/>}
         disabled
@@ -59,6 +224,25 @@ const styles = StyleSheet.create({
     flex: 1,
         //alignItems: 'center',
         justifyContent: 'center',
+  },
+  Con: {
+    height: 35,
+    padding: 5,
+  },
+  tit: {
+    fontSize: 20,
+    padding: 5,
+    color: "#064451",
+    fontWeight: "bold",
+    paddingLeft: "5%",
+  },
+  inpt:{
+    height: 30,
+    borderColor: "black",
+    backgroundColor: "white",
+    opacity: 1,
+    borderWidth: 0.5,
+    borderColor: "black"
   },
   icon: {
       color: "#064451",
@@ -100,6 +284,7 @@ const styles = StyleSheet.create({
       color: '#064451',
       fontSize: 18,
       paddingBottom: 10,
+      paddingLeft: "5%"
   },
   action: {
       flexDirection: 'row',

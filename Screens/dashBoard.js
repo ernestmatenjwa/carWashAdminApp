@@ -1,8 +1,64 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Iconicons from "react-native-vector-icons/Ionicons"
+import {
+  Auth, 
+  API,
+  graphqlOperation,
+} from 'aws-amplify';
+//import { getAdmin } from './../graphql/queries';
+import { createAdmin } from './../src/graphql/mutations';
+import { getAdmin } from './../src/graphql/queries'
+
+
+const randomImages = [
+  'https://tse2.mm.bing.net/th?id=OIP.e1KNYwnuhNwNj7_-98yTRwHaF7&pid=Api&P=0&w=221&h=178',
+  'https://tse1.mm.bing.net/th?id=OIP.Q_-11kM22YOL505PnecHqgHaI9&pid=Api&P=0&w=300&h=300',
+]
+/*
+@auth(rules: [{ allow: owner }]) 
+*/ 
+// You can explore the built-in icon families and icons on the web at:
+//input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+// https://icons.expo.fyi/
 
 export default function DashBoadScreen({ navigation }) {
+
+  const getRandomImage = () => {
+    return randomImages[Math.floor(Math.random() * randomImages.length)];
+  }
+
+  React.useEffect( () => {
+    const fetchUser = async () => {
+      const userInfo = await Auth.currentAuthenticatedUser({ bypassCache: true });
+      if(userInfo){
+        const userData = await API.graphql(
+          graphqlOperation(
+            getAdmin,
+            { id: userInfo.attributes.sub }
+            )
+        )
+        if (userData.data.getAdmin) {
+          //console.log("User is already registered in database");
+          return;
+        }
+        const newUser = {
+          id: userInfo.attributes.sub,
+          name: userInfo.username,
+          email: userInfo.attributes.email,
+          phone: userInfo.attributes.phone_number,
+          imageUrl: getRandomImage(),
+        }
+        await API.graphql(
+          graphqlOperation(
+            createAdmin,
+            { input: newUser }
+          )
+        )
+      }
+    }
+    fetchUser();
+  }, []) 
   return (
   <View style={styles.container}>
     <View style={{marginTop:10, 

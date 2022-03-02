@@ -17,6 +17,9 @@ import VehicleTypeScreen from "./components/vehicletype";
 import BusinessPageScreen from "./components/businesspage";
 import AdminEdit from "./Screens/adminEdit";
 import BusineEdit from "./Screens/busEdit";
+import ConfirmEmailScreen from "./components/ConfirmEmailScreen.js"
+import ForgotPasswordScreen from "./components/ForgotPasswordScreen"
+import NewPasswordScreen from "./components/NewPasswordScreen"
 
 import Iconicons from "react-native-vector-icons/Ionicons"
 import { NavigationContainer } from "@react-navigation/native";
@@ -24,6 +27,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
+import Amplify from 'aws-amplify'
+import awsconfig from './src/aws-exports'
+Amplify.configure(awsconfig)
 // const Stack = createNativeStackNavigator();
 // const MaterialBottomTabs = createBottomTabNavigator();
 // const MaterialTopTabs = createMaterialTopTabNavigator();
@@ -170,6 +176,7 @@ export default function App() {
        <Stack.Navigator>
         <Stack.Screen name="Splash" component={HomeScreen} options={{header: () => null}} />
         <Stack.Screen name="SignupScreen" component={SignupScreen} options={{header: () => null}} />
+        <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} options={{header: () => null}} />
         <Stack.Screen name="LoginScreen" component={LoginScreen} options={{header: () => null}} />
         <Stack.Screen name="AdminEdit" component={AdminEdit} options={{header: () => null}} />
         <Stack.Screen name="BusineEdit" component={BusineEdit} options={{header: () => null}} />
@@ -177,6 +184,8 @@ export default function App() {
         <Stack.Screen name="DashBoadScreen" component={TabScreen} options={{header: () => null}} />
         <Stack.Screen name="HistoryScreen" component={HistoryScreen} options={{header: () => null}}
         />
+        <Stack.Screen name="ConfirmEmailScreen" component={ConfirmEmailScreen} options={{header: () => null}} />
+        <Stack.Screen name="NewPasswordScreen" component={NewPasswordScreen} options={{header: () => null}} />
         <Stack.Screen 
           name="RequestScreen" 
           component={RequestScreen}
