@@ -25,7 +25,7 @@ export default function BusinessProfileScreen({ navigation }) {
   const {control, handleSubmit, watch} = useForm();
   const [user, setUser] = React.useState([]);
  // const [b_location, setB_Location] = React.useState("");
-  const [bname, setB_Name] = React.useState("");
+  const [hide, setHide] = React.useState(false);
   const [imageUrl, setBimageUrl] = React.useState("");
   const [isModalVisible, setModalVisible] = React.useState(false);
   const [carwash, setSetCarwash] = React.useState([]);
@@ -92,8 +92,11 @@ export default function BusinessProfileScreen({ navigation }) {
     const getCarwashDetails = async (e) => {
       const userInfo = await Auth.currentAuthenticatedUser({ bypassCache: true });
       const ID = userInfo.attributes.sub
+      if(!ID){
+        setHide(true)
+      }
          //e.preventDefault();
-         console.log('ca++++==', ID);
+         console.log('ca++++==', hide);
          try{
            //console.log('try');
           const userData = await API.graphql(graphqlOperation(getCarwash, {id: ID}));
@@ -108,67 +111,11 @@ export default function BusinessProfileScreen({ navigation }) {
   }, []) 
   return (
     <View style = {styles.container}>
-        {/*(() => {
-       if (isModalVisible === true){
+        {(() => {
+       if (hide === true){
       return (
-      <Modal isVisible={isModalVisible} style={{backgroundColor: "white",opacity: 0.8,}}>   
-        <View
-        style={{height:"50%"}}
-        >
-        <Text style={[styles.tit, {alignSelf: "center", color:"green", fontSize: 30, paddingBottom: "10%"}]}>Register Carwash</Text>
-        <Text style={styles.tit}>Business Name</Text>
-        <CustomInput
-          name="name"
-          control={control}
-          placeholder="Enter name"
-          rightIcon={<Icon size={24} 
-          style={styles.icon} name='user'/>}
-          rules={{
-            required: 'Username is required',
-            minLength: {
-              value: 3,
-              message: 'Username should be at least 3 characters long',
-            },
-            maxLength: {
-              value: 24,
-              message: 'Username should be max 24 characters long',
-            },
-          }}
-        />
-          <Text style={styles.tit}>Business Location</Text>
-          <CustomInput
-          name="location"
-          control={control}
-          placeholder="Enter location"
-          rightIcon={<Icon size={24} 
-          style={styles.icon} name='user'/>}
-          rules={{
-            required: 'Username is required',
-            minLength: {
-              value: 3,
-              message: 'Username should be at least 3 characters long',
-            },
-            maxLength: {
-              value: 24,
-              message: 'Username should be max 24 characters long',
-            },
-          }}
-        />
-        </View>
-        <View style={{ alignContent: "center"}}>
-        <Pressable
-        onPress={handleSubmit(RegisterC)}
-        style={{padding: 1, alignSelf: "center",}}
-        ><Text style={{fontSize: 20, fontWeight: "bold", color: "green"}}>SUBMIT</Text></Pressable>
-        </View>
-      </Modal>
-        )
-      }
-      return (
-        null
-      );
-    })()*/}
-    <View style = {{justifyContent:'center',alignItems:'center', width:"100%", marginTop: "1%", marginBottom: "0%"}}>          
+        <>
+      <View style = {{justifyContent:'center',alignItems:'center', width:"100%", marginTop: "1%", marginBottom: "0%"}}>          
        <Image source={{uri:carwash.data?.data.getCarwash.imageUrl}} style={styles.UserImg} /> 
     </View>
   
@@ -216,6 +163,14 @@ export default function BusinessProfileScreen({ navigation }) {
             >Edit</Text>
         </LinearGradient>
     </View> 
+    </>
+        )
+      }
+      return (
+        null
+      );
+    })()}
+    
     </View>
   );
 }

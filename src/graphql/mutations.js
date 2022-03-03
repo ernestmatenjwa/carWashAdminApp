@@ -22,13 +22,11 @@ export const createAdmin = /* GraphQL */ `
           createdAt
           updatedAt
           adminCarwashId
-          owner
         }
         nextToken
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -53,13 +51,11 @@ export const updateAdmin = /* GraphQL */ `
           createdAt
           updatedAt
           adminCarwashId
-          owner
         }
         nextToken
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -84,13 +80,11 @@ export const deleteAdmin = /* GraphQL */ `
           createdAt
           updatedAt
           adminCarwashId
-          owner
         }
         nextToken
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -108,7 +102,6 @@ export const createCarwash = /* GraphQL */ `
       createdAt
       updatedAt
       adminCarwashId
-      owner
     }
   }
 `;
@@ -126,7 +119,6 @@ export const updateCarwash = /* GraphQL */ `
       createdAt
       updatedAt
       adminCarwashId
-      owner
     }
   }
 `;
@@ -144,7 +136,6 @@ export const deleteCarwash = /* GraphQL */ `
       createdAt
       updatedAt
       adminCarwashId
-      owner
     }
   }
 `;
@@ -161,7 +152,6 @@ export const createUser = /* GraphQL */ `
       imageUrl
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -178,7 +168,6 @@ export const updateUser = /* GraphQL */ `
       imageUrl
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -195,7 +184,48 @@ export const deleteUser = /* GraphQL */ `
       imageUrl
       createdAt
       updatedAt
-      owner
+    }
+  }
+`;
+export const createVehicleType = /* GraphQL */ `
+  mutation CreateVehicleType(
+    $input: CreateVehicleTypeInput!
+    $condition: ModelVehicleTypeConditionInput
+  ) {
+    createVehicleType(input: $input, condition: $condition) {
+      id
+      name
+      imageUrl
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateVehicleType = /* GraphQL */ `
+  mutation UpdateVehicleType(
+    $input: UpdateVehicleTypeInput!
+    $condition: ModelVehicleTypeConditionInput
+  ) {
+    updateVehicleType(input: $input, condition: $condition) {
+      id
+      name
+      imageUrl
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteVehicleType = /* GraphQL */ `
+  mutation DeleteVehicleType(
+    $input: DeleteVehicleTypeInput!
+    $condition: ModelVehicleTypeConditionInput
+  ) {
+    deleteVehicleType(input: $input, condition: $condition) {
+      id
+      name
+      imageUrl
+      createdAt
+      updatedAt
     }
   }
 `;

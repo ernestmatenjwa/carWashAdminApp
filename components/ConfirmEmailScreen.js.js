@@ -19,7 +19,7 @@ export default function ConfirmEmailScreen({ navigation }) {
     setLoading(true);
     try{
      await Auth.confirmSignUp(data.username, data.code);
-      navigation.navigate('SignIn');  
+      navigation.navigate('LoginScreen');  
     }
     catch(e){
       Alert.alert('Error',e.message);
@@ -28,16 +28,14 @@ export default function ConfirmEmailScreen({ navigation }) {
   };
 
   const onSignInPress = () => {
-    navigation.navigate('SignIn');
+    navigation.navigate('LoginScreen');
   };
 
   const onResendPress = async () => {
-
     try{
-      const response =await Auth.resendSignUp(username);
-      
+      const response =await Auth.resendSignUp(username);  
       Alert.alert('Success',response);
-    navigation.navigate('SignIn');
+    navigation.navigate('LoginScreen');
     }
     catch(e){
      

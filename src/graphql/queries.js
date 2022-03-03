@@ -19,13 +19,11 @@ export const getAdmin = /* GraphQL */ `
           createdAt
           updatedAt
           adminCarwashId
-          owner
         }
         nextToken
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -47,7 +45,6 @@ export const listAdmins = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
@@ -64,7 +61,6 @@ export const getCarwash = /* GraphQL */ `
       createdAt
       updatedAt
       adminCarwashId
-      owner
     }
   }
 `;
@@ -84,7 +80,6 @@ export const listCarwashes = /* GraphQL */ `
         createdAt
         updatedAt
         adminCarwashId
-        owner
       }
       nextToken
     }
@@ -100,7 +95,6 @@ export const getUser = /* GraphQL */ `
       imageUrl
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -119,7 +113,35 @@ export const listUsers = /* GraphQL */ `
         imageUrl
         createdAt
         updatedAt
-        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getVehicleType = /* GraphQL */ `
+  query GetVehicleType($id: ID!) {
+    getVehicleType(id: $id) {
+      id
+      name
+      imageUrl
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listVehicleTypes = /* GraphQL */ `
+  query ListVehicleTypes(
+    $filter: ModelVehicleTypeFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listVehicleTypes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        imageUrl
+        createdAt
+        updatedAt
       }
       nextToken
     }

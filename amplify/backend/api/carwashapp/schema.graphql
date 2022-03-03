@@ -1,4 +1,4 @@
-type Admin @model @auth(rules: [{ allow: owner }]) {
+type Admin @model @auth(rules: [{ allow: private }]){
   id: ID!
   name: String!
   email: String!
@@ -6,14 +6,14 @@ type Admin @model @auth(rules: [{ allow: owner }]) {
   imageUrl: String
   carwash: [Carwash] @hasMany
 }
-type Carwash @model @auth(rules: [{ allow: owner }]){
+type Carwash @model @auth(rules: [{ allow: private }]){
   id: ID!
   name: String
   location: String
   Desc: String
   imageUrl: String
 }
-type User @model @auth(rules: [{ allow: owner }]) {
+type User @model @auth(rules: [{ allow: private }]) {
   id: ID!
   name: String!
   email: String!
@@ -21,3 +21,8 @@ type User @model @auth(rules: [{ allow: owner }]) {
   imageUrl: String
 }
 
+type vehicleType @model @auth(rules: [{ allow: private }]) {
+  id: ID!
+  name: String!
+  imageUrl: String
+}
