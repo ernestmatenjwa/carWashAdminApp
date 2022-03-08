@@ -22,11 +22,13 @@ export const createAdmin = /* GraphQL */ `
           createdAt
           updatedAt
           adminCarwashId
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -51,11 +53,13 @@ export const updateAdmin = /* GraphQL */ `
           createdAt
           updatedAt
           adminCarwashId
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -80,11 +84,13 @@ export const deleteAdmin = /* GraphQL */ `
           createdAt
           updatedAt
           adminCarwashId
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -102,6 +108,7 @@ export const createCarwash = /* GraphQL */ `
       createdAt
       updatedAt
       adminCarwashId
+      owner
     }
   }
 `;
@@ -119,6 +126,7 @@ export const updateCarwash = /* GraphQL */ `
       createdAt
       updatedAt
       adminCarwashId
+      owner
     }
   }
 `;
@@ -136,6 +144,7 @@ export const deleteCarwash = /* GraphQL */ `
       createdAt
       updatedAt
       adminCarwashId
+      owner
     }
   }
 `;
@@ -152,6 +161,7 @@ export const createUser = /* GraphQL */ `
       imageUrl
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -168,6 +178,7 @@ export const updateUser = /* GraphQL */ `
       imageUrl
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -184,66 +195,7 @@ export const deleteUser = /* GraphQL */ `
       imageUrl
       createdAt
       updatedAt
-    }
-  }
-`;
-export const createRequests = /* GraphQL */ `
-  mutation CreateRequests(
-    $input: CreateRequestsInput!
-    $condition: ModelRequestsConditionInput
-  ) {
-    createRequests(input: $input, condition: $condition) {
-      id
-      brand
-      regNO
-      userName
-      package
-      totalDue
-      status
-      carwash
-      o_date
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateRequests = /* GraphQL */ `
-  mutation UpdateRequests(
-    $input: UpdateRequestsInput!
-    $condition: ModelRequestsConditionInput
-  ) {
-    updateRequests(input: $input, condition: $condition) {
-      id
-      brand
-      regNO
-      userName
-      package
-      totalDue
-      status
-      carwash
-      o_date
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteRequests = /* GraphQL */ `
-  mutation DeleteRequests(
-    $input: DeleteRequestsInput!
-    $condition: ModelRequestsConditionInput
-  ) {
-    deleteRequests(input: $input, condition: $condition) {
-      id
-      brand
-      regNO
-      userName
-      package
-      totalDue
-      status
-      carwash
-      o_date
-      createdAt
-      updatedAt
+      owner
     }
   }
 `;
@@ -298,6 +250,69 @@ export const deleteRegisteredCars = /* GraphQL */ `
       model
       Desc
       imageUrl
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const createRequests = /* GraphQL */ `
+  mutation CreateRequests(
+    $input: CreateRequestsInput!
+    $condition: ModelRequestsConditionInput
+  ) {
+    createRequests(input: $input, condition: $condition) {
+      id
+      brand
+      regNO
+      userName
+      package
+      totalDue
+      status
+      carwash
+      o_date
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const updateRequests = /* GraphQL */ `
+  mutation UpdateRequests(
+    $input: UpdateRequestsInput!
+    $condition: ModelRequestsConditionInput
+  ) {
+    updateRequests(input: $input, condition: $condition) {
+      id
+      brand
+      regNO
+      userName
+      package
+      totalDue
+      status
+      carwash
+      o_date
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteRequests = /* GraphQL */ `
+  mutation DeleteRequests(
+    $input: DeleteRequestsInput!
+    $condition: ModelRequestsConditionInput
+  ) {
+    deleteRequests(input: $input, condition: $condition) {
+      id
+      brand
+      regNO
+      userName
+      package
+      totalDue
+      status
+      carwash
+      o_date
       createdAt
       updatedAt
       owner
