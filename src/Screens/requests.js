@@ -10,6 +10,12 @@ import { Text,
 Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input } from 'react-native-elements';
+import {
+  Auth, 
+  API,
+  graphqlOperation,
+} from 'aws-amplify';
+import { listRequests } from "../graphql/queries";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -102,44 +108,61 @@ const carwash = [
 
 export default function RequestScreen({ navigation }) {
   const [searchValue, onChangesearchValue] = React.useState('');
+  const [req, setReq] = React.useState([]);
 
+  React.useEffect(() => {
+   
+    const fetchReq = async () => {
+      try {
+        const usersData = await API.graphql(
+          graphqlOperation(
+            listRequests
+          )
+        )
+        //return
+        if(usersData.data.listRequests.items.length === 0)
+        {
+          Alert.alert("You have not made any request to any car wash yet")
+          return
+        }
+        setReq(usersData.data.listRequests.items);
+        console.log("req")
+        for (let i = 0; i < usersData.data.listRequests.items.length; i++) {
+          if(usersData.data.listRequests.items[i].brand === "BMW"){
+            usersData.data.listRequests.items[i]
+            console.log(i)
+          }
+          console.log(usersData.data.listRequests.items[i])
+        }
+      } catch (e) {
+        console.log(e);
+      }
+   
+    }
+    fetchReq();
+  }, [req])
   return (
-  <View style={{backgroundColor: "lightgrey"}} >
-  <View style={{height: 10}}></View>
-  <Input 
-    onChangeText={onChangesearchValue} value={searchValue}
-    inputContainerStyle={styles.inputContainer}
-    inputStyle ={styles.inputText}
-    placeholder="Search"
-    rightIcon={ <Icon size={15} 
-    style={styles.icon} name='search'/>}
-  />
- <FlatList 
-      style={{width: 356, paddingBottom: 0, height: width/0.61666 /*elevation: 50*/}}
-      data={carwash}
-      keyExtractor={item=>item.id}
-      renderItem={({item}) => (
-        <View >
-          <View style={styles.userInfo}>
-            <View style={styles.UserImgWrapper}>
-            <Text style={styles.UserName}>{item.date}</Text>
-            </View>
-            <View style={styles.TextSection}>
-              <View style={styles.UserInfoText}>
-                <Text style={styles.packagee}>{item.package}</Text>
+    <View style={{backgroundColor: "lightgrey", height: "100%",}} >
+    <View style={{height: 10}}></View>
+   
+   <FlatList 
+        data={req}
+        keyExtractor={item=>item.id}
+        renderItem={({item}) => (
+            <View style={styles.userInfo}>
+              <View style={styles.TextSection}>
+                <View style={styles.UserInfoText}>
+                  <Text style={styles.packagee}>{item.package}</Text>
+                </View>
+                <Text style={styles.carbranndd}>{item.brand} - {item.regNO}</Text>
+                
+                <Text style={styles.UserName}>Service date: {item.o_date} | R {item.totalDue}</Text>
+               <Pressable style={{marginLeft:"80%"}}><Text style={{color: "green",  }}>Done</Text></Pressable> 
               </View>
-              <Text style={styles.carbranndd}>{item.carBrand}</Text>
-              <Text style={styles.u}>{item.user}</Text>
-              <View style={styles.btns} >
-                <Pressable style={{marginLeft: 150, borderColor: "lightgrey", borderWidth: 0.2, padding: 5, paddingLeft: 10, paddingRight: 10, height: 20 }}><Text style={{color: "red", marginTop: -7 }}>reject</Text></Pressable>
-                  <Pressable style={{ borderColor: "lightgrey", borderWidth: 0.2, padding: 5, height: 20 }}><Text style={{color: "green", marginTop: -7 }}>approve</Text></Pressable>
-                  </View>
             </View>
-          </View>
-        </View>
-      )}
-    />
-    </View>
+        )}
+      />
+      </View>
   );
 }
 
@@ -183,7 +206,7 @@ const styles = StyleSheet.create({
   userInfo: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingBottom: 20,
+    paddingBottom: 5,
   },
   u: {
     fontSize: 10,
@@ -211,7 +234,8 @@ const styles = StyleSheet.create({
     paddingTop: 3,
     paddingLeft: 5,
     marginLeft: 10,
-    width: 300,
+    width: "95%",
+    
     //borderWidth: 0.1,
     //elevation: 100,
    // borderColor: "#cccccc",

@@ -20,7 +20,10 @@ export default function AdminProfileScreen({ navigation }) {
     const [text, onChangeText] = React.useState('');
     const [user, setUser] = React.useState([]);
     const [profile, setProfile] = React.useState([]);
-    const [idd, setIdd] = React.useState([]);
+    const [name, setName] = React.useState("");
+    const [email, setEmail] = React.useState("");
+    const [phone, setPhone] = React.useState("");
+    const [id, setID] = React.useState("");
     const [isModalVisible, setModalVisible] = React.useState(false);
     const {control, handleSubmit, watch} = useForm();
 
@@ -127,15 +130,15 @@ export default function AdminProfileScreen({ navigation }) {
             )
         )
         if (userData.data.getCarwash) {
-          console.log("User is aalreadyyy registered in database");
           setModalVisible(false);
           return;
         }
         const newUser = {
-          id: userInfo.attributes.sub,
+          id: userInfo.attributes.sub, 
           location: data.location,
           name: data.name,
           Desc: data.Desc,
+          adminCarwashId: userInfo.attributes.sub, 
           imageUrl: "https://image.shutterstock.com/image-vector/camera-add-icon-260nw-1054194038.jpg",
         }
         try{
@@ -174,9 +177,14 @@ export default function AdminProfileScreen({ navigation }) {
              try{
                //console.log('try');
               const userData = await API.graphql(graphqlOperation(getAdmin, {id: ID}));
-              //console.log('yes22 ', userData);
+              console.log('yes22 ', userData.data.getAdmin.name);
              // console.log('>> ', profile.data?.data.getUserByEmail.name, '<<');
               setProfile({data: userData})
+              //console.log(userData.data.getAdmin.items.name);
+              setName(userData.data.getAdmin.name)
+              setEmail(userData.data.getAdmin.email)
+              setPhone(userData.data.getAdmin.phone)
+              setID(userData.data.getAdmin.id)
                 } catch (e) {
                     console.log('error getting user 22', e);  
                 } 
@@ -194,7 +202,8 @@ export default function AdminProfileScreen({ navigation }) {
            }
            onLoad();
            getProfile();
-       }, []);
+       }, [profile]);
+    
   return (
     <View style = {styles.container}>
       {(() => {
@@ -282,7 +291,7 @@ export default function AdminProfileScreen({ navigation }) {
     
     <Text style={[styles.text_footer, {marginTop:"-10%"}]}>Full Name</Text>
     <Input 
-        onChangeText={onChangeText} value={profile.data?.data.getAdmin.name}
+        onChangeText={onChangeText} value={name}
         inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
         inputStyle ={[styles.inputText, {paddingLeft: 15}]}                
         rightIcon={ <Icon size={24} 
@@ -292,7 +301,7 @@ export default function AdminProfileScreen({ navigation }) {
     
     <Text style={styles.text_footer}>Email Address</Text>
     <Input 
-        onChangeText={onChangeText} value={profile.data?.data.getAdmin.email}
+        onChangeText={onChangeText} value={email} 
         inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
         inputStyle = {[styles.inputText, {paddingLeft: 15}]}
         rightIcon={ <Icon size={24} 
@@ -301,7 +310,7 @@ export default function AdminProfileScreen({ navigation }) {
     />
     <Text style={styles.text_footer}>Phone</Text>
     <Input 
-        onChangeText={onChangeText} value={profile.data?.data.getAdmin.phone}
+        onChangeText={onChangeText} value={phone}
         inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
         inputStyle = {[styles.inputText, {paddingLeft: 15}]}               
         rightIcon={ <Icon size={24} 
@@ -315,7 +324,7 @@ export default function AdminProfileScreen({ navigation }) {
         ><Text style={[
             styles.textSign, 
             {color:'#fff'}]}
-            onPress={() =>  navigation.push("AdminEdit")}
+            onPress={() =>  navigation.push("AdminEdit", {name, email, phone, id})}
             >Edit</Text>
         </LinearGradient>
     </View> 

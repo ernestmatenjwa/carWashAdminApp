@@ -10,13 +10,13 @@ export default function HomeScreen({ navigation }) {
      <Text style={styles.titlee}>Sek'Clean Car Wash Admin portal</Text> 
      <Pressable 
       style={styles.signup} 
-      onPress={() =>  navigation.push("SignupScreen")}
-     ><Text style={styles.text}>Sign Up</Text></Pressable>
-      <View style={styles.space} />
-     <Pressable 
-      style={styles.login} 
       onPress={() =>  navigation.push("LoginScreen")}
      ><Text style={styles.text}>Log in</Text></Pressable>
+     <View style={styles.space} />
+     <Pressable 
+      style={styles.login} 
+      onPress={() =>  navigation.push("SignupScreen")}
+     ><Text style={styles.text}>Sign Up</Text></Pressable> 
   </ImageBackground>
   );
 }

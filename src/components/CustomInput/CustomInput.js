@@ -10,13 +10,16 @@ const CustomInput = ({
   iconName,
   rules = {},
   placeholder,
-  secureTextEntry,
+  defaultValue,
+  secureTextEntry
+  
 }) => {
   return (
     <Controller
       control={control}
       name={name}
       rules={rules}
+      defaultValue={defaultValue}
       render={({field: {value, onChange, onBlur}, fieldState: {error}}) => (
         <>
           <View
@@ -30,6 +33,7 @@ const CustomInput = ({
                  rightIcon={<Icon size={24} 
                  style={styles.icon} 
                  name={iconName}
+                 
                  />}
               value={value}
               onChangeText={onChange}

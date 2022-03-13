@@ -24,8 +24,12 @@ export default function BusinessProfileScreen({ navigation }) {
  // const [b_location, setB_Location] = React.useState("");
   const [hide, setHide] = React.useState(false);
   const [imageUrl, setBimageUrl] = React.useState("");
+  const [name, setName] = React.useState("");
+  const [location, setLocation] = React.useState("");
+  const [desc, setDesc] = React.useState("");
   const [isModalVisible, setModalVisible] = React.useState(false);
   const [carwash, setSetCarwash] = React.useState([]);
+  const [id, setID] = React.useState("");
 
   const close = () => {
     setModalVisible(!isModalVisible);
@@ -89,9 +93,6 @@ export default function BusinessProfileScreen({ navigation }) {
     const getCarwashDetails = async (e) => {
       const userInfo = await Auth.currentAuthenticatedUser({ bypassCache: true });
       const ID = userInfo.attributes.sub
-      if(!ID){
-        setHide(true)
-      }
          //e.preventDefault();
          console.log('ca++++==', hide);
          try{
@@ -99,21 +100,33 @@ export default function BusinessProfileScreen({ navigation }) {
           const userData = await API.graphql(graphqlOperation(getCarwash, {id: ID}));
           console.log('yes22 ', userData);
          // console.log('>> ', profile.data?.data.getUserByEmail.name, '<<');
+         if (userData.data.getCarwash) {
+          setHide(false)
+          setName(userData.data.getCarwash.name)
+          setLocation(userData.data.getCarwash.location)
+          setDesc(userData.data.getCarwash.Desc)
+          setBimageUrl(userData.data.getCarwash.imageUrl)
+          setID(userData.data.getCarwash.id)
+          console.log("carwash exist");
+          return;
+        } else{
+          setHide(true)
+        }
           setSetCarwash({data: userData})
             } catch (e) {
                 console.log('error getting user 22', e);  
             } 
    }
    getCarwashDetails();
-  }, []) 
+  }, [name, location, desc]) 
   return (
     <View style = {styles.container}>
         {(() => {
-       if (hide === true){
+       if (hide === false){
       return (
         <>
       <View style = {{justifyContent:'center',alignItems:'center', width:"100%", marginTop: "1%", marginBottom: "0%"}}>          
-       <Image source={{uri:carwash.data?.data.getCarwash.imageUrl}} style={styles.UserImg} /> 
+       <Image source={{imageUrl}} style={styles.UserImg} /> 
     </View>
   
     <Text style={styles.text_footer}>Business Name</Text>
@@ -121,7 +134,7 @@ export default function BusinessProfileScreen({ navigation }) {
         //onChangeText={onChangeText} value={text}
         inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
         inputStyle ={[styles.inputText, {paddingLeft: 15}]}                
-        value={carwash.data?.data.getCarwash.name}
+        value={name}
         rightIcon={ <Icon size={24} 
         style={styles.icon} name='home'/>}
         disabled
@@ -132,7 +145,7 @@ export default function BusinessProfileScreen({ navigation }) {
         //onChangeText={onChangeText} value={text}
         inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
         inputStyle = {[styles.inputText, {paddingLeft: 15}]}
-        value={carwash.data?.data.getCarwash.location}
+        value={location}
         rightIcon={ <Icon size={24} 
         style={styles.icon} name='map-marker'/>}
         disabled
@@ -143,9 +156,9 @@ export default function BusinessProfileScreen({ navigation }) {
         //onChangeText={onChangeText} value={text}
         inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
         inputStyle = {[styles.inputText, {paddingLeft: 15}]}
-        value={carwash.data?.data.getCarwash.Desc}
+        value={desc}
         rightIcon={ <Icon size={24} 
-        style={styles.icon} name='map-marker'/>}
+        style={styles.icon} name='pencil'/>}
         disabled
     />
     
@@ -156,7 +169,7 @@ export default function BusinessProfileScreen({ navigation }) {
         ><Text style={[
             styles.textSign, 
             {color:'#fff'}]}
-            onPress={() =>  navigation.push("BusineEdit")}
+            onPress={() =>  navigation.push("BusineEdit", {name, location, desc, id})}
             >Edit</Text>
         </LinearGradient>
     </View> 

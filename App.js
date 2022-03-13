@@ -173,6 +173,7 @@ export default function App() {
   return (
     <NavigationContainer>
        <Stack.Navigator>
+       
         <Stack.Screen name="Splash" component={HomeScreen} options={{header: () => null}} />
         <Stack.Screen name="SignupScreen" component={SignupScreen} options={{header: () => null}} />
         <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} options={{header: () => null}} />

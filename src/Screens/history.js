@@ -11,6 +11,12 @@ Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/MaterialIcons';
+import {
+  Auth, 
+  API,
+  graphqlOperation,
+} from 'aws-amplify';
+import { listRequests } from "../graphql/queries";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -115,7 +121,39 @@ const carwash = [
 
 export default function RequestScreen({ navigation }) {
   //const [searchValue, onChangesearchValue] = React.useState('');
+  const [req, setReq] = React.useState([]);
 
+  React.useEffect(() => {
+   
+    const fetchReq = async () => {
+      try {
+        const usersData = await API.graphql(
+          graphqlOperation(
+            listRequests
+          )
+        )
+        //return
+        if(usersData.data.listRequests.items.length === 0)
+        {
+          Alert.alert("You have not made any request to any car wash yet")
+          return
+        }
+        setReq(usersData.data.listRequests.items);
+        console.log("req")
+        for (let i = 0; i < usersData.data.listRequests.items.length; i++) {
+          if(usersData.data.listRequests.items[i].brand === "BMW"){
+            usersData.data.listRequests.items[i]
+            console.log(i)
+          }
+          console.log(usersData.data.listRequests.items[i])
+        }
+      } catch (e) {
+        console.log(e);
+      }
+   
+    }
+    fetchReq();
+  }, [req])
   return (
     <SafeAreaView>
        <View style={{height: height/4.8, backgroundColor: "#064451", width: width,}}>
@@ -129,18 +167,18 @@ export default function RequestScreen({ navigation }) {
         >
           <FlatList 
       style={{width: width, paddingBottom: 0, height: height/1.1 /*elevation: 50*/}}
-      data={carwash}
+      data={req}
       keyExtractor={item=>item.id}
       renderItem={({item}) => (
         
           <View style={styles.userInfo}>
             <View style={styles.TextSection}>
-              <Text style={{paddingTop: 10}}>{item.date}</Text>
-              <Text style={styles.carbranndd}>{item.carBrand}</Text>
+              <Text style={{paddingTop: 10}}>{item.o_date}</Text>
+              <Text style={styles.carbranndd}>{item.brand}</Text>
               <Text>{item.package}</Text>
-              <Text style={styles.u}><Icon size={10}  name='user'/>{item.user}</Text>
+              <Text style={styles.u}><Icon size={10}  name='user'/>{item.userName}</Text>
               <View style={styles.btns} >
-                <Text style={{marginLeft: "50%", marginTop: "-5%", fontWeight: "700"}}>Total: R{item.price}</Text>
+                <Text style={{marginLeft: "50%", marginTop: "-5%", fontWeight: "700"}}>Total: R{item.totalDue}</Text>
                   </View>
             </View>
           </View>
