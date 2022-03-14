@@ -187,45 +187,120 @@ export const deleteUser = /* GraphQL */ `
     }
   }
 `;
-export const createVehicleType = /* GraphQL */ `
-  mutation CreateVehicleType(
-    $input: CreateVehicleTypeInput!
-    $condition: ModelVehicleTypeConditionInput
+export const createRequests = /* GraphQL */ `
+  mutation CreateRequests(
+    $input: CreateRequestsInput!
+    $condition: ModelRequestsConditionInput
   ) {
-    createVehicleType(input: $input, condition: $condition) {
+    createRequests(input: $input, condition: $condition) {
       id
-      name
-      imageUrl
+      brand
+      regNO
+      userName
+      package
+      totalDue
+      status
+      carwash
+      o_date
       createdAt
       updatedAt
     }
   }
 `;
-export const updateVehicleType = /* GraphQL */ `
-  mutation UpdateVehicleType(
-    $input: UpdateVehicleTypeInput!
-    $condition: ModelVehicleTypeConditionInput
+export const updateRequests = /* GraphQL */ `
+  mutation UpdateRequests(
+    $input: UpdateRequestsInput!
+    $condition: ModelRequestsConditionInput
   ) {
-    updateVehicleType(input: $input, condition: $condition) {
+    updateRequests(input: $input, condition: $condition) {
       id
-      name
-      imageUrl
+      brand
+      regNO
+      userName
+      package
+      totalDue
+      status
+      carwash
+      o_date
       createdAt
       updatedAt
     }
   }
 `;
-export const deleteVehicleType = /* GraphQL */ `
-  mutation DeleteVehicleType(
-    $input: DeleteVehicleTypeInput!
-    $condition: ModelVehicleTypeConditionInput
+export const deleteRequests = /* GraphQL */ `
+  mutation DeleteRequests(
+    $input: DeleteRequestsInput!
+    $condition: ModelRequestsConditionInput
   ) {
-    deleteVehicleType(input: $input, condition: $condition) {
+    deleteRequests(input: $input, condition: $condition) {
       id
-      name
+      brand
+      regNO
+      userName
+      package
+      totalDue
+      status
+      carwash
+      o_date
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createRegisteredCars = /* GraphQL */ `
+  mutation CreateRegisteredCars(
+    $input: CreateRegisteredCarsInput!
+    $condition: ModelRegisteredCarsConditionInput
+  ) {
+    createRegisteredCars(input: $input, condition: $condition) {
+      id
+      userID
+      brand
+      regNO
+      model
+      Desc
       imageUrl
       createdAt
       updatedAt
+      owner
+    }
+  }
+`;
+export const updateRegisteredCars = /* GraphQL */ `
+  mutation UpdateRegisteredCars(
+    $input: UpdateRegisteredCarsInput!
+    $condition: ModelRegisteredCarsConditionInput
+  ) {
+    updateRegisteredCars(input: $input, condition: $condition) {
+      id
+      userID
+      brand
+      regNO
+      model
+      Desc
+      imageUrl
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteRegisteredCars = /* GraphQL */ `
+  mutation DeleteRegisteredCars(
+    $input: DeleteRegisteredCarsInput!
+    $condition: ModelRegisteredCarsConditionInput
+  ) {
+    deleteRegisteredCars(input: $input, condition: $condition) {
+      id
+      userID
+      brand
+      regNO
+      model
+      Desc
+      imageUrl
+      createdAt
+      updatedAt
+      owner
     }
   }
 `;

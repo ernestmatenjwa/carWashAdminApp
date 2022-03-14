@@ -160,36 +160,102 @@ export const onDeleteUser = /* GraphQL */ `
     }
   }
 `;
-export const onCreateVehicleType = /* GraphQL */ `
-  subscription OnCreateVehicleType {
-    onCreateVehicleType {
+export const onCreateRequests = /* GraphQL */ `
+  subscription OnCreateRequests {
+    onCreateRequests {
       id
-      name
-      imageUrl
+      brand
+      regNO
+      userName
+      package
+      totalDue
+      status
+      carwash
+      o_date
       createdAt
       updatedAt
     }
   }
 `;
-export const onUpdateVehicleType = /* GraphQL */ `
-  subscription OnUpdateVehicleType {
-    onUpdateVehicleType {
+export const onUpdateRequests = /* GraphQL */ `
+  subscription OnUpdateRequests {
+    onUpdateRequests {
       id
-      name
-      imageUrl
+      brand
+      regNO
+      userName
+      package
+      totalDue
+      status
+      carwash
+      o_date
       createdAt
       updatedAt
     }
   }
 `;
-export const onDeleteVehicleType = /* GraphQL */ `
-  subscription OnDeleteVehicleType {
-    onDeleteVehicleType {
+export const onDeleteRequests = /* GraphQL */ `
+  subscription OnDeleteRequests {
+    onDeleteRequests {
       id
-      name
+      brand
+      regNO
+      userName
+      package
+      totalDue
+      status
+      carwash
+      o_date
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateRegisteredCars = /* GraphQL */ `
+  subscription OnCreateRegisteredCars($owner: String) {
+    onCreateRegisteredCars(owner: $owner) {
+      id
+      userID
+      brand
+      regNO
+      model
+      Desc
       imageUrl
       createdAt
       updatedAt
+      owner
+    }
+  }
+`;
+export const onUpdateRegisteredCars = /* GraphQL */ `
+  subscription OnUpdateRegisteredCars($owner: String) {
+    onUpdateRegisteredCars(owner: $owner) {
+      id
+      userID
+      brand
+      regNO
+      model
+      Desc
+      imageUrl
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onDeleteRegisteredCars = /* GraphQL */ `
+  subscription OnDeleteRegisteredCars($owner: String) {
+    onDeleteRegisteredCars(owner: $owner) {
+      id
+      userID
+      brand
+      regNO
+      model
+      Desc
+      imageUrl
+      createdAt
+      updatedAt
+      owner
     }
   }
 `;
