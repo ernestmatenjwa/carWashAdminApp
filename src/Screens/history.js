@@ -337,9 +337,18 @@ const { width, height } = Dimensions.get("screen");
 const HistoryScreen = () => {
   const [searchValue, onChangesearchValue] = React.useState('');
   const [req, setReq] = React.useState([]);
+  const [date, setDate] = useState(new Date());
+  const [text,setText] = useState('');
 
+  const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
   React.useEffect(() => {
-   
+    const currentDate = date;
+
+    let tempDate = new Date(currentDate);
+    let fDate = tempDate.getDate()+' '+month[(tempDate.getMonth())]+' '+tempDate.getFullYear()
+    let fTime = tempDate.getHours()+':' + tempDate.getMinutes();
+    setText(fDate + ' ' + fTime)
+    console.log(text)
     const fetchReq = async () => {
       try {
         const usersData = await API.graphql(
@@ -404,7 +413,7 @@ const HistoryScreen = () => {
       </SectionHeader> 
       <DetailBox >
         <McText style = {{ fontSize: 20, color: '#808080', marginLeft: 5 }}>
-          June 2020
+          {text}
         </McText>
           <FlatList 
             keyExtractor={(item) => 'event_' + item.id}
