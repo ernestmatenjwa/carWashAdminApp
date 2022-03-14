@@ -173,18 +173,61 @@ export default function App() {
   return (
     <NavigationContainer>
        <Stack.Navigator>
-       
-        <Stack.Screen name="Splash" component={HomeScreen} options={{header: () => null}} />
-        <Stack.Screen name="SignupScreen" component={SignupScreen} options={{header: () => null}} />
-        <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} options={{header: () => null}} />
-        <Stack.Screen name="LoginScreen" component={LoginScreen} options={{header: () => null}} />
-        <Stack.Screen name="AdminEdit" component={AdminEdit} options={{header: () => null}} />
-        <Stack.Screen name="BusineEdit" component={BusineEdit} options={{header: () => null}} />
-        <Stack.Screen name="BusinessProfileScreen" component={TabScreen2} />
-        <Stack.Screen name="DashBoadScreen" component={TabScreen} options={{header: () => null}} />
-        <Stack.Screen name="HistoryScreen" component={HistoryScreen} options={{header: () => null}}
+       <Stack.Screen name="HistoryScreen" component={HistoryScreen} options={{header: () => null}}
         />
-        <Stack.Screen name="ConfirmEmailScreen" component={ConfirmEmailScreen} options={{header: () => null}} />
+        <Stack.Screen 
+        name="Splash" 
+        component={HomeScreen} 
+        options={{
+          header: () => null
+          }} 
+          />
+        <Stack.Screen 
+        name="SignupScreen" 
+        component={SignupScreen} 
+        options={{
+          header: () => null
+          }} 
+          />
+        <Stack.Screen 
+        name="ForgotPasswordScreen" 
+        component={ForgotPasswordScreen} 
+        options={{
+          header: () => null
+          }} 
+          />
+        <Stack.Screen 
+        name="LoginScreen" 
+        component={LoginScreen} 
+        options={{header: () => null}} />
+        <Stack.Screen 
+        name="AdminEdit" 
+        component={AdminEdit} 
+        options={{
+          header: () => null
+          }} 
+          />
+        <Stack.Screen 
+        name="BusineEdit" 
+        component={BusineEdit} 
+        options={{
+          header: () => null
+        }} />
+        <Stack.Screen 
+        name="BusinessProfileScreen" 
+        component={TabScreen2} />
+        <Stack.Screen 
+        name="DashBoadScreen" 
+        component={TabScreen} 
+        options={{
+          header: () => null}} />
+       
+        <Stack.Screen 
+        name="ConfirmEmailScreen" 
+        component={ConfirmEmailScreen} 
+        options={{
+          header: () => null
+          }} />
         <Stack.Screen name="NewPasswordScreen" component={NewPasswordScreen} options={{header: () => null}} />
         <Stack.Screen 
           name="RequestScreen" 
@@ -221,10 +264,27 @@ export default function App() {
           },
         })}
         />
-        <Stack.Screen name="InformationScreen" component={InformationScreen} />
-        <Stack.Screen name="DocumentsScreen" component={DocumentsScreen} options={{header: () => null}}/>
-        <Stack.Screen name="StaffScreen" component={StaffScreen} />
-        <Stack.Screen name="VehicleTypeScreen" component={VehicleTypeScreen} options={{header: () => null}} />
+        <Stack.Screen 
+        name="InformationScreen" 
+        component={InformationScreen}
+         />
+        <Stack.Screen 
+        name="DocumentsScreen" 
+        component={DocumentsScreen} 
+        options={{
+          header: () => null
+          }}/>
+        <Stack.Screen 
+        name="StaffScreen" 
+        component={
+          StaffScreen} 
+          />
+        <Stack.Screen 
+        name="VehicleTypeScreen" 
+        component={VehicleTypeScreen} 
+        options={{
+          header: () => null
+          }} />
         {/* <Stack.Screen name="BusinessPageScreen" component={TabScreen2} options={{header: () => null}} /> */}
     </Stack.Navigator>
   </NavigationContainer>
