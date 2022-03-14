@@ -173,8 +173,6 @@ export default function App() {
   return (
     <NavigationContainer>
        <Stack.Navigator>
-       <Stack.Screen name="HistoryScreen" component={HistoryScreen} options={{header: () => null}}
-        />
         <Stack.Screen 
         name="Splash" 
         component={HomeScreen} 
@@ -189,6 +187,23 @@ export default function App() {
           header: () => null
           }} 
           />
+          <Stack.Screen 
+          name="HistoryScreen" 
+          component={HistoryScreen} 
+          options={({route}) => ({
+            title: "",
+            headerBackTitleVisible: false,
+            headerTitleAlign: 'center',
+            headerTitleStyle: {
+              color: "#064451",
+              fontWeight: "700",
+              fontSize: 25,
+            },
+            headerStyle: {
+               image: "lightgrey",
+            }
+          })}
+        />
         <Stack.Screen 
         name="ForgotPasswordScreen" 
         component={ForgotPasswordScreen} 
