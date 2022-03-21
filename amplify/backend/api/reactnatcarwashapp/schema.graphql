@@ -1,0 +1,78 @@
+type Admin @model @auth(rules: [{ allow: public }]){
+  id: ID!
+  name: String!
+  email: String!
+  phone: String
+  imageUrl: String
+  picture: AdminPic @hasOne
+  request: [AdminRequests] @hasMany
+  carwash: [Carwash] @hasMany
+}
+type AdminRequests @model @auth(rules: [{ allow: public }]){
+  id: ID!
+  brand: String!
+  regNO: String!
+  model: String!
+  Desc: String!
+  package: String!
+  packDesc: String!
+  totalDue: String!
+  status: String!
+  serTime: String
+  userName: String!
+  carUrl: String
+}
+type AdminPic @model @auth(rules: [{ allow: public }]){
+  id: ID!
+  imageUrl: String!
+}
+type Carwash @model @auth(rules: [{ allow: public }]){
+  id: ID!
+  name: String
+  location: String
+  Desc: String
+  imageUrl: String
+  logo: BusinessLogo @hasOne
+}
+type BusinessLogo @model @auth(rules: [{ allow: public }]){
+  id: ID!
+  imageUrl: String!
+}
+type User @model @auth(rules: [{ allow: public }]){
+  id: ID!
+  name: String!
+  email: String!
+  phone: String
+  imageUrl: String
+  request: [UserRequests] @hasMany
+  car: [RegisteredCars] @hasMany
+  picture: UserPic @hasOne
+}
+type RegisteredCars @model @auth(rules: [{ allow: public }]){
+  id: ID!
+  brand: String!
+  regNO: String!
+  model: String!
+  Desc: String!
+  imageUrl: String
+}
+type UserRequests @model @auth(rules: [{ allow: public }]){
+  id: ID!
+  brand: String!
+  regNO: String!
+  model: String!
+  Desc: String!
+  location: String!
+  package: String!
+  packDesc: String!
+  totalDue: String!
+  status: String!
+  carwashName: String!
+  serTime: String
+  userName: String!
+  carUrl: String
+}
+type UserPic @model @auth(rules: [{ allow: public }]){
+  id: ID!
+  imageUrl: String!
+}

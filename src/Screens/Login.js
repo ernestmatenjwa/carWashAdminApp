@@ -20,7 +20,7 @@ export default function LoginScreen({ navigation }) {
     setLoading(true);
     try{
       await Auth.signIn(data.username, data.password)
-      Alert.alert('Success', 'Welcome back ' + data.username); 
+      //Alert.alert('Success', 'Welcome back ' + data.username); 
       navigation.navigate('DashBoadScreen');  
     }
     catch(e){

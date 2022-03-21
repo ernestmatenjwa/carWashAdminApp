@@ -6,7 +6,7 @@ import { Text,
  Dimensions,
  Pressable,
  FlatList,
- TouchableOpacity,
+ Alert,
 Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input } from 'react-native-elements';
@@ -15,7 +15,9 @@ import {
   API,
   graphqlOperation,
 } from 'aws-amplify';
-import { listRequests } from "../graphql/queries";
+import moment from "moment";
+import { listUserRequests } from "../graphql/queries";
+import { updateUserRequests } from '../graphql/mutations';
 
 const { width, height } = Dimensions.get("screen");
 
@@ -109,30 +111,51 @@ const carwash = [
 export default function RequestScreen({ navigation }) {
   const [searchValue, onChangesearchValue] = React.useState('');
   const [req, setReq] = React.useState([]);
+  const [cur, setCur] = React.useState("PENDING WASH...");
+  const [ad, setAd] = React.useState("");
+  const com = async (id) => {
+    try{
+        const re = {
+            id: id,
+            status: "DONE!!",
+        }
+        console.log(re)
+        const apdm = await API.graphql({query: updateUserRequests, variables: {input: re}});
+        console.log("Completed!!")
+        Alert.alert("Completed!!")
+        
+    } catch (e) {
+      console.log(e)
+        Alert.alert(e)
+    } 
+    //navigation.navigate("businessPage")
+ }
 
   React.useEffect(() => {
-   
+  
     const fetchReq = async () => {
+      const userInfo = await Auth.currentAuthenticatedUser({ bypassCache: true });
+      setAd(userInfo.attributes.sub)
       try {
         const usersData = await API.graphql(
           graphqlOperation(
-            listRequests
+            listUserRequests
           )
         )
         //return
-        if(usersData.data.listRequests.items.length === 0)
+        if(usersData.data.listUserRequests.items.length === 0)
         {
           Alert.alert("You have not made any request to any car wash yet")
           return
         }
-        setReq(usersData.data.listRequests.items);
+        setReq(usersData.data.listUserRequests.items);
         console.log("req")
-        for (let i = 0; i < usersData.data.listRequests.items.length; i++) {
-          if(usersData.data.listRequests.items[i].brand === "BMW"){
-            usersData.data.listRequests.items[i]
+        for (let i = 0; i < usersData.data.listUserRequests.items.length; i++) {
+          if(usersData.data.listUserRequests.items[i].brand === "BMW"){
+            usersData.data.listUserRequests.items[i]
             console.log(i)
           }
-          console.log(usersData.data.listRequests.items[i])
+          console.log(usersData.data.listUserRequests.items[i])
         }
       } catch (e) {
         console.log(e);
@@ -141,26 +164,64 @@ export default function RequestScreen({ navigation }) {
     }
     fetchReq();
   }, [req])
+  const filData = ad && cur //PENDING WASH...
+  ? req.filter(x => 
+    x.packDesc.toLowerCase().includes(ad.toLowerCase()) && x.status.toLowerCase().includes(cur.toLowerCase())
+    )
+    : null
   return (
     <View style={{backgroundColor: "lightgrey", height: "100%",}} >
     <View style={{height: 10}}></View>
    
    <FlatList 
-        data={req}
+        data={filData}
         keyExtractor={item=>item.id}
         renderItem={({item}) => (
-            <View style={styles.userInfo}>
-              <View style={styles.TextSection}>
-                <View style={styles.UserInfoText}>
-                  <Text style={styles.packagee}>{item.package}</Text>
-                </View>
-                <Text style={styles.carbranndd}>{item.brand} - {item.regNO}</Text>
+            // <View style={styles.userInfo}>
+            //   <View style={styles.TextSection}>
+            //     <View style={styles.UserInfoText}>
+            //       <Text style={styles.packagee}>{item.package}</Text>
+            //     </View>
+            //     <Text style={styles.carbranndd}>{item.brand} - {item.regNO}</Text>
                 
-                <Text style={styles.UserName}>Service date: {item.o_date} | R {item.totalDue}</Text>
-               <Pressable style={{marginLeft:"80%"}}><Text style={{color: "green",  }}>Done</Text></Pressable> 
-              </View>
+            //     <Text style={styles.UserName}>Service date: {item.serTime} | R {item.totalDue}</Text>
+            //    <Pressable 
+            //    onPress={() => com(item.id)}
+            //    style={{
+            //      marginLeft:"80%"
+            //      }}>
+            //        <Text style={{
+            //          color: "green",  
+            //          }}>
+            //          DONE</Text>
+            //          </Pressable> 
+            //   </View>
+            // </View>
+            <View style={styles.userInfo}>
+            <View style={styles.UserImgWrapper}>
+                <Image style={styles.UserImg} source={{uri: item.carUrl}} />
             </View>
+              <View style={styles.TextSection}>
+              <Text style={{width: width/1.8,fontWeight: 'bold', fontSize: 12, color: "grey", marginLeft: "60%", marginTop: "10%"}}>{moment(item.createdAt).fromNow()}</Text>
+                  <Text style={styles.UserName}>{item.package}</Text>
+                  <Text style={{fontWeight: 'bold', fontSize: 12, }}>{item.brand} - {item.model} - {item.regNO}</Text>
+                  <Text style={{fontWeight: 'bold', fontSize: 12, }}>Service Date: {item.serTime} </Text>
+                  <Text style={{fontWeight: 'bold', fontSize: 12, }}>Subtotal: R {item.totalDue}</Text>
+                  <Text style={{fontWeight: 'bold', fontSize: 12, }}>Requester: {item.userName}</Text>
+                 <View style={{flexDirection: 'row', paddingTop: "2%", marginLeft:"50%"}}>
+                 <Pressable onPress={() => com(item.id)}><Text style={{color: "green", fontSize: 16, fontWeight: "bold", marginBottom: "40%"}}>DONE</Text></Pressable>
+                  {/* <Pressable onPress={() => del(item.id)}><Text style={{flexDirection: "", color: "red", fontSize: 16, fontWeight: "bold"}}>DELETE</Text></Pressable> */}
+                     </View> 
+              </View>
+            </View> 
         )}
+        ListEmptyComponent={<View 
+          style={{flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',}}><Text 
+          style={{fontWeight: 'bold', fontSize: 10, color: "green", }}>
+            Sorry we currently do not have requests for you</Text>
+            </View>}
       />
       </View>
   );
@@ -204,82 +265,56 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   userInfo: {
+    width: width/1.03,
+    height: "80%",
+    backgroundColor:"white",
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingBottom: 5,
-  },
-  u: {
-    fontSize: 10,
-    color: "lightgrey",
-    fontWeight: "700",
-  },
-  UserImgWrapper: {
-    paddingTop: 50,
-    paddingBottom: 15,
-    marginLeft: 5,
+    marginHorizontal: 2,
+    marginBottom: 5,
+    //marginTop: 1,
+    borderRadius: 13,
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
+    padding: 2,
   },
   UserImg: {
-    width: 120,
-    height: 70,
-    borderRadius: 0,
-  },
-  icon:{
-    color:'#064451',
-    width:20,
+    width: width/4.7,
+    height: height/9,
+    borderRadius: 13,
+    marginBottom: 15,
   },
   TextSection: {
     flexDirection: "column",
     justifyContent: "center",
-    paddingBottom: 1,
-    paddingTop: 3,
-    paddingLeft: 5,
+    padding: 15,
+    paddingLeft: 0,
     marginLeft: 10,
-    width: "95%",
+    width: 300,
     
-    //borderWidth: 0.1,
-    //elevation: 100,
-   // borderColor: "#cccccc",
-    borderLeftColor: "#064451",
-    borderLeftWidth: 7,
-    borderTopLeftRadius: 7,
-    borderBottomLeftRadius: 7,
-    backgroundColor: "white"
   },
   UserInfoText: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: -4,
-  },
-  btns: {
-    flexDirection: "row",
-    justifyContent: "space-around",
     marginBottom: 5,
   },
   UserName: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "bold",
-    //margin: 20,
-    //fontFamily: "Lato-Regular",
+    color: "#064451",
   },
-  packagee: {
-    fontSize: 18,
-    fontWeight: "bold",
-    backgroundColor: "#064451",
-    color: "white",
-    //fontFamily: "Lato-Regular",
+  MessageText:{
+    fontWeight: 'bold',
+    fontSize: 14, 
+    color: "lightgrey",
   },
-  carbranndd: {
-    fontSize: 18,
-    fontWeight: "500",
-    //fontFamily: "Lato-Regular",
+
+  UserImgWrapper: {
+    padding: 30,
+    //paddingBottom: 15,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  PostTime: {
-    fontSize: 12,
-    color: "#666",
-    //fontFamily: "Lato-Regular",
-  },
-  MessageText: {
-    fontSize: 14,
-    color: "#333333"
-  }
+
 })

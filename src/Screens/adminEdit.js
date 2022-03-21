@@ -113,8 +113,8 @@ React.useEffect(() => {
       rules={{
         required: 'Phone is required',
         minLength: {
-          value: 12,
-          message: 'Phone should be at least 12 characters long',
+          value: 10,
+          message: 'Phone should be at least 10 characters long',
         },
       }}
     /> 
