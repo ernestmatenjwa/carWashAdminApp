@@ -118,7 +118,7 @@ export default function BusinessProfileScreen({ navigation }) {
             } 
    }
    getCarwashDetails();
-  }, [name, location, desc]) 
+  }, [name, location, desc, id, imageUrl]) 
   return (
     <View style = {styles.container}>
         {(() => {

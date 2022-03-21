@@ -50,8 +50,8 @@ export default function DashBoadScreen({ navigation }) {
           id: userInfo.attributes.sub,
           name: userInfo.username,
           email: userInfo.attributes.email,
-          phone: userInfo.attributes.phone_number,
-          imageUrl: getRandomImage(),
+          phone: "none",
+          imageUrl: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png",
         }
         await API.graphql(
           graphqlOperation(
@@ -75,7 +75,7 @@ export default function DashBoadScreen({ navigation }) {
      style={styles.inner}
      onPress={() =>  navigation.push("RequestScreen")}
      >
-        <View style={{width: 100, height: 80, borderRadius:10, marginTop:30, alignItems:"center"}}>
+        <View style={{width: 150, height: 80, borderRadius:10, marginTop:30, alignItems:"center"}}>
            <Iconicons name={"list-outline"} size={25} color={"#064451"} />
            <Text style={{color: "#064451", fontWeight: "bold", fontSize: 15 }}>Requests</Text>
         </View>
@@ -85,13 +85,13 @@ export default function DashBoadScreen({ navigation }) {
       style={styles.inner}
       onPress={() =>  navigation.push("HistoryScreen")}
       >
-        <View style={{width: 100, height: 80, borderRadius:10, marginTop:30, alignItems:"center"}}>
+        <View style={{width: 150, height: 80, borderRadius:10, marginTop:30, alignItems:"center"}}>
            <Iconicons name={"apps"} size={25} color={"#064451"} />
            <Text style={{color: "#064451", fontWeight: "bold", fontSize: 15 }}>History</Text>
         </View>
         
       </TouchableOpacity>   
-      <TouchableOpacity 
+      {/* <TouchableOpacity 
       style={styles.inner}
       onPress={() =>  navigation.push("VehicleTypeScreen")}
       >
@@ -100,7 +100,7 @@ export default function DashBoadScreen({ navigation }) {
            <Text style={{color: "#064451", fontWeight: "bold", fontSize: 15, padding: 5, textAlign: "center" }}>Vehicle Type</Text>
         </View>
         
-      </TouchableOpacity>   
+      </TouchableOpacity>    
       <TouchableOpacity 
       style={styles.inner}
       onPress={() =>  navigation.push("InformationScreen")}
@@ -110,14 +110,14 @@ export default function DashBoadScreen({ navigation }) {
            <Text style={{color: "#064451", fontWeight: "bold", fontSize: 15 }}>Information</Text>
         </View>
        
-      </TouchableOpacity>   
+      </TouchableOpacity>  */} 
       <TouchableOpacity 
       style={styles.inner}
-      onPress={() =>  navigation.push("DocumentsScreen")}
+      onPress={() =>  navigation.push("InformationScreen")}
       >
-        <View style={{width: 100, height: 80, borderRadius:10, marginTop:30, alignItems:"center"}}>
+        <View style={{width: 150, height: 80, borderRadius:10, marginTop:30, alignItems:"center"}}>
            <Iconicons name={"folder-outline"} size={25} color={"#064451"} />
-           <Text style={{color: "#064451", fontWeight: "bold", fontSize: 15 }}>Documents</Text>
+           <Text style={{color: "#064451", fontWeight: "bold", fontSize: 15 }}>Information</Text>
         </View>
         
       </TouchableOpacity>   
@@ -125,12 +125,12 @@ export default function DashBoadScreen({ navigation }) {
       style={styles.inner}
       onPress={() =>  navigation.push("StaffScreen")}
       >
-        <View style={{width: 100, height: 80, borderRadius:10, marginTop:30, alignItems:"center"}}>
+        <View style={{width: 150, height: 80, borderRadius:10, marginTop:30, alignItems:"center"}}>
            <Iconicons name={"people-outline"} size={25} color={"#064451"} />
            <Text style={{color: "#064451", fontWeight: "bold", fontSize: 15 }}>Staff</Text>
         </View>
         
-      </TouchableOpacity>
+      </TouchableOpacity> 
     </View>
     <View 
       style={styles.inner2}
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
      height:60,
       borderRadius:10,
       margin:4,
-      marginTop: 20,
+      marginTop: 5,
       padding:5,
       width: 340,
   },
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
    width: 340,
     borderRadius:10,
     margin:4,
-    marginTop: 20,
+    marginTop: 2,
     padding:5,
     borderLeftColor: "#064451",
     borderLeftWidth: 15,

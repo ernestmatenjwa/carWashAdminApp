@@ -173,25 +173,18 @@ export default function App() {
   return (
     <NavigationContainer>
        <Stack.Navigator>
-        <Stack.Screen 
+       <Stack.Screen 
         name="Splash" 
         component={HomeScreen} 
         options={{
           header: () => null
           }} 
           />
-        <Stack.Screen 
-        name="SignupScreen" 
-        component={SignupScreen} 
-        options={{
-          header: () => null
-          }} 
-          />
-          <Stack.Screen 
-          name="HistoryScreen" 
-          component={HistoryScreen} 
+       <Stack.Screen 
+          name="RequestScreen" 
+          component={RequestScreen}
           options={({route}) => ({
-            title: "",
+            title: "Requests",
             headerBackTitleVisible: false,
             headerTitleAlign: 'center',
             headerTitleStyle: {
@@ -200,7 +193,37 @@ export default function App() {
               fontSize: 25,
             },
             headerStyle: {
-               image: "lightgrey",
+               backgroundColor: "lightgrey",
+            }
+          })} 
+        />
+       <Stack.Screen 
+        name="DashBoadScreen" 
+        component={TabScreen} 
+        options={{
+          header: () => null}} />
+        <Stack.Screen 
+        name="SignupScreen" 
+        component={SignupScreen} 
+        options={{
+          header: () => null
+          }} 
+          />
+             <Stack.Screen 
+          name="HistoryScreen" 
+          component={HistoryScreen} 
+          options={({route}) => ({
+            title: "History",
+            headerBackTitleVisible: false,
+            headerTitleAlign: 'center',
+            headerTitleStyle: {
+              color: "white",
+              fontWeight: "700",
+              fontSize: 25,
+            },
+            headerStyle: {
+              backgroundColor: "#064451",
+              elevation: 0,
             }
           })}
         />
@@ -231,11 +254,7 @@ export default function App() {
         <Stack.Screen 
         name="BusinessProfileScreen" 
         component={TabScreen2} />
-        <Stack.Screen 
-        name="DashBoadScreen" 
-        component={TabScreen} 
-        options={{
-          header: () => null}} />
+        
        
         <Stack.Screen 
         name="ConfirmEmailScreen" 
@@ -244,23 +263,7 @@ export default function App() {
           header: () => null
           }} />
         <Stack.Screen name="NewPasswordScreen" component={NewPasswordScreen} options={{header: () => null}} />
-        <Stack.Screen 
-          name="RequestScreen" 
-          component={RequestScreen}
-          options={({route}) => ({
-            title: "Requests",
-            headerBackTitleVisible: false,
-            headerTitleAlign: 'center',
-            headerTitleStyle: {
-              color: "#064451",
-              fontWeight: "700",
-              fontSize: 25,
-            },
-            headerStyle: {
-               backgroundColor: "lightgrey",
-            }
-          })} 
-        />
+        
         <Stack.Screen 
         name="ChatScreen"
         component={ChatScreen} 
@@ -293,6 +296,19 @@ export default function App() {
         name="StaffScreen" 
         component={
           StaffScreen} 
+          options={({route}) => ({
+            title: "Technical support Staff",
+            headerBackTitleVisible: false,
+            headerTitleAlign: 'center',
+            headerTitleStyle: {
+              color: "white",
+              fontWeight: "200",
+              fontSize: 20,
+            },
+            headerStyle: {
+              backgroundColor: "#064451",
+            }
+          })}
           />
         <Stack.Screen 
         name="VehicleTypeScreen" 

@@ -186,7 +186,7 @@ export default function AdminProfileScreen({ navigation }) {
               setPhone(userData.data.getAdmin.phone)
               setID(userData.data.getAdmin.id)
                 } catch (e) {
-                    console.log('error getting user 22', e);  
+                  console.log('error getting user 22', e);  
                 } 
        }
            function loadUser() { 
