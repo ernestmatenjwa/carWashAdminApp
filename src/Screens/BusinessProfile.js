@@ -44,7 +44,6 @@ export default function BusinessProfileScreen({ navigation }) {
             )
         )
         if (userData.data.getCarwash) {
-          console.log("User is aalreadyyy registered in database");
           setModalVisible(false);
           return;
         }

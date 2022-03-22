@@ -176,20 +176,21 @@ export default function RequestScreen({ navigation }) {
                 <Image style={styles.UserImg} source={{uri: item.carUrl}} />
               <View style={styles.TextSection}>
               <View style={styles.TimeDate}>
-              <View style={{height: 15}}></View>
+              <View style={{height: 20}}></View>
           <Text style={{color: COLORS.gray, fontSize: 9,}}>{moment(item.createdAt).format('DD MMMM YYYY, h:mm:ss a')}</Text>
         </View>
         <View style={[styles.FirstRow, {flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between"}]}>
           <Text style={styles.UserName}>{/*item.vehicleType}{' - '*/}{item.package} - R {item.totalDue}</Text>
         </View>
-        <View><Text>{item.brand} {item.model} - {item.regNO}</Text></View>
+        <View><Text>{item.brand} {item.model} {item.Desc} - {item.regNO}</Text></View>
+        <View><Text style={{color: "black"}}>Desc: {item.Desc} </Text></View>
         <View style={[styles.SecondRow, {flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between"}]}>
           <Text style={{color: COLORS.black, fontSize: 10}}>Service date: {item.serTime}</Text>
         </View>
      
         <Pressable 
         style={{marginLeft: "70%", }}
-        onPress={() => com(item.id)}><Text style={{color: "green", fontSize: 16, fontWeight: "bold"}}>DONE</Text></Pressable>
+        onPress={() => com(item.id)}><Text style={{color: "green", fontSize: 16, fontWeight: "bold", paddingBottom: "10%"}}>DONE</Text></Pressable>
               </View>
         </View> 
         )}
@@ -252,7 +253,7 @@ const styles = StyleSheet.create({
   },
   userInfo: {
     width: width/1.03,
-    height: 90,
+    height: 110,
     backgroundColor:"white",
     flexDirection: "row",
     justifyContent: "space-between",

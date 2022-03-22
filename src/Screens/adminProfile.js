@@ -30,7 +30,6 @@ export default function AdminProfileScreen({ navigation }) {
     const {control, handleSubmit, watch} = useForm();
 
       React.useEffect( () => {
-        console.log("Car is already");
         const fetchUser = async () => {
             const userInfo = await Auth.currentAuthenticatedUser({ bypassCache: true });
             if(userInfo){
@@ -41,7 +40,6 @@ export default function AdminProfileScreen({ navigation }) {
               )
            ) 
           if (userData.data.getCarwash) {
-          console.log("Car is already registered in database");
           return;
         }  
         setModalVisible(true)
