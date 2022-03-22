@@ -7,6 +7,7 @@ import { getCarwash } from '../graphql/queries';
 import { createCarwash } from '../graphql/mutations';
 import Modal from "react-native-modal";
 //import CustomInput from '../CustomInput/CustomInput';
+import Iconicons from "react-native-vector-icons/Ionicons"
 import {useForm} from 'react-hook-form';
 import {
     Auth, 
@@ -17,13 +18,10 @@ import {
 const { width, height }= Dimensions.get("screen");
 
 export default function BusinessProfileScreen({ navigation }) {
-  //const [text, onChangeText] = React.useState('');
-  //const [fill, setFill] = React.useState(0);
   const {control, handleSubmit, watch} = useForm();
   const [user, setUser] = React.useState([]);
- // const [b_location, setB_Location] = React.useState("");
   const [hide, setHide] = React.useState(false);
-  const [imageUrl, setBimageUrl] = React.useState("");
+  const [imageUrl, setBimageUrl] = React.useState("https://image.shutterstock.com/image-vector/camera-add-icon-260nw-1054194038.jpg");
   const [name, setName] = React.useState("");
   const [location, setLocation] = React.useState("");
   const [desc, setDesc] = React.useState("");
@@ -63,43 +61,15 @@ export default function BusinessProfileScreen({ navigation }) {
           )
         )
       }
-    
-   /* console.log(data)
-    try{
-        await API.graphql(graphqlOperation(createCarwash, { input: data}));
-        alert('Car wash successfully registered')
-        setModalVisible(false);
-       // window.location.replace('/profile')
-    } catch (e) {
-        console.log('error creating user ', e);
-    }*/
+  
   };
-//   const handleSubmittt = async (e) => {
-//     e.preventDefault();
-//        const data = { location: b_location, name: bname, imageUrl: imageUrl };
-//          console.log('data', l)
-//        try{
-//            await API.graphql(graphqlOperation(createCarwash, { input: data}));
-//            alert('Car wash successfully registered')
-//            setModalVisible(false);
-//           // window.location.replace('/profile')
-//        } catch (e) {
-//            console.log('error creating user ', e);
-//        }  
-// }
 
   React.useEffect( () => {
-    console.log("we about to display carwash")
     const getCarwashDetails = async (e) => {
       const userInfo = await Auth.currentAuthenticatedUser({ bypassCache: true });
       const ID = userInfo.attributes.sub
-         //e.preventDefault();
-         console.log('ca++++==', hide);
          try{
-           //console.log('try');
           const userData = await API.graphql(graphqlOperation(getCarwash, {id: ID}));
-          console.log('yes22 ', userData);
-         // console.log('>> ', profile.data?.data.getUserByEmail.name, '<<');
          if (userData.data.getCarwash) {
           setHide(false)
           setName(userData.data.getCarwash.name)
@@ -107,7 +77,6 @@ export default function BusinessProfileScreen({ navigation }) {
           setDesc(userData.data.getCarwash.Desc)
           setBimageUrl(userData.data.getCarwash.imageUrl)
           setID(userData.data.getCarwash.id)
-          console.log("carwash exist");
           return;
         } else{
           setHide(true)
@@ -124,56 +93,32 @@ export default function BusinessProfileScreen({ navigation }) {
         {(() => {
        if (hide === false){
       return (
-        <>
-      <View style = {{justifyContent:'center',alignItems:'center', width:"100%", marginTop: "1%", marginBottom: "0%"}}>          
-       <Image source={{imageUrl}} style={styles.UserImg} /> 
-    </View>
-  
+      <View style = {styles.container}>
+   <View style={{ flexDirection: "row",}}>
+       <Iconicons style={{padding: 10}} name="camera-outline" size={35} color={"#064451"} />
+       {<Image style={{ width: width/4.7,
+                        height: height/9,
+                        borderRadius: 33,
+                        borderWidth: 1,
+                        borderColor: "grey",
+                        }} 
+                        source={{uri: imageUrl}} />}<Iconicons onPress={() =>  navigation.push("BusineEdit", {name, location, desc, id})} style={{padding: 10}} name="create-outline" size={35} color={"#064451"} />
+   </View>
     <Text style={styles.text_footer}>Business Name</Text>
-    <Input 
-        //onChangeText={onChangeText} value={text}
-        inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
-        inputStyle ={[styles.inputText, {paddingLeft: 15}]}                
-        value={name}
-        rightIcon={ <Icon size={24} 
-        style={styles.icon} name='home'/>}
-        disabled
-    />
+    <View style={{borderWidth: 1, borderColor: "grey", padding: 7, width: 300, alignSelf: "flex-start"}}>
+    <Text style={{fontSize: 16}}>{name}</Text>
+    </View>
     
     <Text style={styles.text_footer}>Business location</Text>
-    <Input 
-        //onChangeText={onChangeText} value={text}
-        inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
-        inputStyle = {[styles.inputText, {paddingLeft: 15}]}
-        value={location}
-        rightIcon={ <Icon size={24} 
-        style={styles.icon} name='map-marker'/>}
-        disabled
-    />
+    <View style={{borderWidth: 1, borderColor: "grey", padding: 7, width: 300, alignSelf: "flex-start"}}>
+    <Text style={{fontSize: 16}}>{location}</Text>
+    </View>
 
-<Text style={styles.text_footer}>Business Description</Text>
-    <Input 
-        //onChangeText={onChangeText} value={text}
-        inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
-        inputStyle = {[styles.inputText, {paddingLeft: 15}]}
-        value={desc}
-        rightIcon={ <Icon size={24} 
-        style={styles.icon} name='pencil'/>}
-        disabled
-    />
-    
-    <View style={styles.button}> 
-        <LinearGradient
-           colors={['#064451', '#064451']}
-           style={styles.signIn}
-        ><Text style={[
-            styles.textSign, 
-            {color:'#fff'}]}
-            onPress={() =>  navigation.push("BusineEdit", {name, location, desc, id})}
-            >Edit</Text>
-        </LinearGradient>
-    </View> 
-    </>
+    <Text style={styles.text_footer}>Business Description</Text>
+    <View style={{borderWidth: 1, borderColor: "grey", padding: 7, width: 300, alignSelf: "flex-start"}}>
+    <Text style={{fontSize: 16}}>{desc}</Text>
+    </View>
+    </View>
         )
       }
       return (
@@ -187,8 +132,10 @@ export default function BusinessProfileScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-        //alignItems: 'center',
-        justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    //backgroundColor: "grey"
+    //overflow: "visible",
   },
   Con: {
     height: 35,
@@ -248,8 +195,10 @@ const styles = StyleSheet.create({
   text_footer: {
       color: '#064451',
       fontSize: 18,
-      paddingBottom: 10,
-      paddingLeft: "5%"
+      paddingTop: 10,
+      //paddingLeft: "5%",
+      alignSelf: "flex-start",
+      fontWeight: "bold"
   },
   action: {
       flexDirection: 'row',

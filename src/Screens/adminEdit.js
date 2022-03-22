@@ -11,7 +11,7 @@ import { getAdmin } from '../graphql/queries';
 import { getCarwash } from '../graphql/queries';
 import { updateAdmin } from '../graphql/mutations';
 import Modal from "react-native-modal";
-import CustomInput from '../components/CustomInput/CustomInput';
+import CustomInput from '../components/cus';
 import {useForm} from 'react-hook-form';
 
 const { width, height }= Dimensions.get("screen");
@@ -20,29 +20,11 @@ const EMAIL_REGEX =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 export default function AdminEdit({ navigation, route }) {
-
-    const {name, email, phone, id} = route?.params || {};
-  //  const {control, handleSubmit, watch} = useForm();
+  const {name, email, phone, id} = route?.params || {};
   const {control, handleSubmit, watch} = useForm();
-    // const [text, onChangeText] = React.useState('');
-     
-React.useEffect(() => {
-    console.log(id)
-    return
-      try {
-        // const usersData = await API.graphql(
-        //   graphqlOperation(
-        //     listRegisteredCars
-        //   )
-        // )
-      } catch (e) {
-        console.log(e);
-      }
-  }, [])
+ 
   const apd = async data => {
     const {email: email, name: name, phone: phone} = data;
-    //const {  location: b_location, name: bname, Desc : Desc, imageUrl: imageUrl } = data;
-    console.log(data.name)
     try{
         const admin = {
             id: id,
@@ -50,9 +32,7 @@ React.useEffect(() => {
             email: data.email,
             phone: data.phone
         }
-        console.log(admin)
         const apdm = await API.graphql({query: updateAdmin, variables: {input: admin}});
-        console.log("You have successfully apdated your profile")
         Alert.alert("You have successfully apdated your profile")
         
     } catch (e) {
@@ -63,17 +43,16 @@ React.useEffect(() => {
  }
   return (
     <View style={styles.container}>
-    <View style={{marginTop: "30%",height:width-2, width:"90%", alignSelf: "center", flex: 1}}>
     <View
     style={{ }}
     >
-    <Text style={[styles.tit, {alignSelf: "center", color:"green"}]}>UPDATE</Text>
+    <Text style={{alignSelf: "center", color:"green", fontSize: 23}}>UPDATE</Text>
     <Text style={styles.tit}>Name</Text>
     <CustomInput
       name="name"
       control={control}
       style={styles.inpt}
-      inputContainerStyle={styles.Con}
+      inputContainerStyle={{width: 200}}
       inputStyle ={styles.inputText}
       defaultValue={name}
       rules={{
@@ -94,7 +73,7 @@ React.useEffect(() => {
     control={control}
     style={styles.inpt}
       inputContainerStyle={styles.Con}
-      inputStyle ={styles.inputText}
+      inputStyle ={[styles.inputText, {width: 200}]}
       defaultValue={email}
       rules={{
         required: 'Email is required',
@@ -129,17 +108,20 @@ React.useEffect(() => {
     ><Text style={{fontSize: 20, fontWeight: "bold", color: "red"}}>CANCEL</Text></Pressable>
     </View>
     </View>
-  
-    </View>
   </View>
   );
 }
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
-      //alignItems: 'center',
-      justifyContent: 'center',
-      //padding: 5
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  tit: {
+    paddingLeft: 10,
+    fontSize: 20,
+    fontWeight: "normal",
+    color: "#064451",
   },
   icon: {
       color: "#064451",

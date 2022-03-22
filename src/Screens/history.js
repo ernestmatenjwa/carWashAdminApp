@@ -17,6 +17,7 @@ import {LinearGradient} from 'expo-linear-gradient'
 import { dummyData, FONTS, SIZES, COLORS, icons, images } from '../constants';
 import { McText, McIcon } from '../../component';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import moment from "moment";
 import {
   Auth, 
   API,
@@ -37,13 +38,10 @@ const HistoryScreen = () => {
   const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
   React.useEffect(() => {
     const currentDate = date;
-
     let tempDate = new Date(currentDate);
     let fDate = tempDate.getDate()+' '+month[(tempDate.getMonth())]+' '+tempDate.getFullYear()
     let fTime = tempDate.getHours()+':' + tempDate.getMinutes();
     setText(fDate + ' ' + fTime)
-    console.log(text)
-    
     const fetchReq = async () => {
       const userInfo = await Auth.currentAuthenticatedUser({ bypassCache: true });
       setAd(userInfo.attributes.sub)
@@ -53,21 +51,12 @@ const HistoryScreen = () => {
             listUserRequests
           )
         )
-        console.log(usersData.data.listUserRequests.items.length)
         if(usersData.data.listUserRequests.items.length === 0)
         {
           Alert.alert("You have not made any request to any car wash yet")
           return
         }
         setReq(usersData.data.listUserRequests.items);
-        console.log("req")
-        for (let i = 0; i < usersData.data.listUserRequests.items.length; i++) {
-          if(usersData.data.listUserRequests.items[i].brand === "BMW"){
-            usersData.data.listUserRequests.items[i]
-            console.log(i)
-          }
-          console.log(usersData.data.listUserRequests.items[i])
-        }
       } catch (e) {
         console.log(e);
       }
@@ -75,42 +64,15 @@ const HistoryScreen = () => {
     }
     fetchReq();
   }, [req])
-  const filData = ad
+  const filData = ad && cur //PENDING WASH...
   ? req.filter(x => 
-    x.packDesc.toLowerCase().includes(ad) //&& x.status.toLowerCase().includes(cur.toLowerCase())
+    x.packDesc.toLowerCase().includes(ad.toLowerCase()) && x.status.toLowerCase().includes(cur.toLowerCase())
     )
     : null
-  const _renderItem = ({item, index}) => {
-    return (
-      <View marginVertical={10} marginHorizontal={15} style={{}}>
-        <TimeDate>
-          <McText body3 style={{color: COLORS.gray, fontSize: 9}}>{item.o_date}</McText>
-        </TimeDate>
-        <FirstRow style={{flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
-          <McText body3 style={{color: COLORS.black}}>{item.brand}{' - '}{item.regNO}</McText>
-          <McText body3 style={{color: COLORS.black}}>{/*item.vehicleType}{' - '*/}{item.package}</McText>
-        </FirstRow>
-        <SecondRow style={{flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
-          <McText body3 style={{color: COLORS.black}}>{item.userName}</McText>
-          <McText h3 style={{color: '#0B6F83', fontWeight: 'bold'}}>R {item.totalDue}</McText>
-        </SecondRow>
-      </View>
-    )
-  }
 
   return (
     <View style={styles.container}>
       <View style={styles.SectionHeader}>
-        {/* <ImageBackground
-          resizeMode='cover'
-          source={images.hero_bg}
-          style = {{
-            width: '100%',
-            height: '50%',
-          }}
-          imageStyle= {{opacity:0.5}}
-        >
-        </ImageBackground> */}
       </View> 
       <View style={styles.DetailBox} >
         <Text style = {{ fontSize: 20, color: '#808080', marginLeft: 5 }}>
@@ -120,23 +82,32 @@ const HistoryScreen = () => {
         data={filData}
         keyExtractor={item=>item.id}
         renderItem={({item}) => (
-            <View style={styles.userInfo}>
-                <Image style={styles.UserImg} source={{uri: item.carUrl}} />
-              <View style={styles.TextSection}>
-     <View style={styles.TimeDate}>
-          <Text style={{color: COLORS.gray, fontSize: 9,}}>{item.serTime}</Text>
+          <View style={styles.userInfo}>
+          <Image style={styles.UserImg} source={{uri: item.carUrl}} />
+        <View style={styles.TextSection}>
+        <View style={styles.TimeDate}>
+    <Text style={{color: COLORS.gray, fontSize: 9,}}>{moment(item.createdAt).format('DD MMMM YYYY, h:mm:ss a')}</Text>
+  </View>
+  <View style={[styles.FirstRow, {flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between"}]}>
+    <Text style={styles.UserName}>{/*item.vehicleType}{' - '*/}{item.package} - R {item.totalDue}</Text>
+  </View>
+  <View><Text>{item.brand} {item.model} - {item.regNO}</Text></View>
+  <View style={[styles.SecondRow, {flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between"}]}>
+    <Text style={{color: COLORS.black, fontSize: 10}}>Service date was on : {item.serTime}</Text>
+  </View>
+  <View style={{}}>
+        <Text style={{color: COLORS.black, fontSize: 10}}>Wash completed exactly at: {moment(item.updatedAt).format('DD MMMM YYYY, h:mm:ss a')}</Text>
         </View>
-        <View style={[styles.FirstRow, {flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between"}]}>
-          <Text style={{color: COLORS.black}}>{item.brand}{' - '}{item.regNO}</Text>
-          <Text style={{color: COLORS.black}}>{/*item.vehicleType}{' - '*/}{item.package}</Text>
         </View>
-        <View style={[styles.SecondRow, {flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between"}]}>
-          <Text style={{color: COLORS.black}}>{item.serTime}</Text>
-          <Text h3 style={{color: '#0B6F83', fontWeight: 'bold'}}>R {item.totalDue}</Text>
-        </View>
-              </View>
-            </View>
+  </View> 
         )}
+        ListEmptyComponent={<View 
+          style={{flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',}}><Text 
+          style={{fontWeight: 'bold', fontSize: 10, color: "green", }}>
+            Sorry we currently do not have requests history for you</Text>
+            </View>}
       />
       </View>
       <View style={{height: 10}}></View> 
@@ -145,28 +116,9 @@ const HistoryScreen = () => {
 };
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    height: height / 6.8,
-    borderBottomRightRadius: 20,
-    borderBottomLeftRadius: 20,
-  },
-  DetailBox: {
-    width: "95%",
-    height: "490%",
-    borderRadius: 10,
-    backgroundColor: "white",
-    elevation: 12,
-    top: "-120%",
-    left: 10,
-    //padding: 10,
-  },
-  SectionHeader: {
-    width: "100%",
-    height: 220,
-    backgroundColor: "#064451",
-    flexDirection: "row",
-    borderBottomLeftRadius: 15,
-    borderBottomRightRadius: 15,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   SecondRow: {
 
@@ -178,23 +130,7 @@ const styles = StyleSheet.create({
 
   },
   inputContainer: {
-    height: 50,
-    borderRadius:20,
-    //borderColor: '#064451',
-    //borderWidth: 1,  
-    paddingRight:10,
-    backgroundColor:"white",
-  },
-  item: {
-    flex: 1,
-    marginHorizontal: 10,
-    marginTop: 24,
-    padding: 30,
-    backgroundColor: 'blue',
-    fontSize: 24,
-  },
-  inputContainer: {
-    height: 50,
+    //height: 50,
     borderRadius:20,
     //borderColor: '#064451',
     //borderWidth: 1,  
@@ -224,91 +160,59 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   userInfo: {
+    width: width/1.03,
+    height: 90,
+    backgroundColor:"white",
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingBottom: 2,
-    paddingTop: 2,
-    marginLeft: "-5%",
-    width: "95%",
-  },
-  u: {
-    fontSize: 10,
-    color: "lightgrey",
-    fontWeight: "700",
-  },
-  UserImgWrapper: {
-    //paddingRight: 50,
-    //paddingBottom: 15,
-    //marginLeft: 5,
+    marginHorizontal: 2,
+    marginBottom: 2,
+    marginTop: 2,
+    borderRadius: 13,
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
+    //padding: 2,
   },
   UserImg: {
-    width: 20,
-    height: 20,
-    borderRadius: 0,
-    marginLeft: "7%"
-  },
-  icon:{
-    color:'#064451',
-    width:20,
+    width: 60,
+    height: 60,
+    borderRadius: 13,
+    padding: 10,
+    marginTop: 25,
   },
   TextSection: {
     flexDirection: "column",
     justifyContent: "center",
-    paddingBottom: 1,
-    paddingTop: 3,
-    paddingLeft: 5,
-    paddingRight: 5,
-    marginLeft: "3%",
-    width: "90%",
+    padding: 15,
+    paddingTop: 1,
+    //marginLeft: -110,
+    width: 300,
     
-    //borderWidth: 0.1,
-    //elevation: 100,
-   // borderColor: "#cccccc",
-    borderLeftColor: "#064451",
-    borderLeftWidth: 7,
-    borderTopLeftRadius: 7,
-    borderBottomLeftRadius: 7,
-    borderTopRightRadius: 7,
-    borderBottomRightRadius: 7,
-    backgroundColor: "white", borderWidth: 1, borderColor: "grey",
   },
   UserInfoText: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: -4,
-  },
-  btns: {
-    flexDirection: "row",
-    justifyContent: "space-around",
     marginBottom: 5,
   },
   UserName: {
-    fontSize: 14,
-    fontWeight: "bold",
-    //margin: 20,
-    //fontFamily: "Lato-Regular",
-  },
-  packagee: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     color: "#064451",
-    //color: "white",
-    //fontFamily: "Lato-Regular",
   },
-  carbranndd: {
-    fontSize: 18,
-    fontWeight: "500",
-    //fontFamily: "Lato-Regular",
+  MessageText:{
+    fontWeight: 'bold',
+    fontSize: 14, 
+    color: "lightgrey",
   },
-  PostTime: {
-    fontSize: 12,
-    color: "#666",
-    //fontFamily: "Lato-Regular",
+
+  UserImgWrapper: {
+    padding: 30,
+    //paddingBottom: 15,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  MessageText: {
-    fontSize: 14,
-    color: "#333333"
-  }
+
 });
 
 export default HistoryScreen;
