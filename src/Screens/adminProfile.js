@@ -286,9 +286,7 @@ export default function AdminProfileScreen({ navigation }) {
       );
     })()}
     
-    <View style={styles.header}>
-       <Text style={styles.HeaderText}>Welcome, {name}!</Text>
-    </View>
+   
    
     <Image style={styles.avatar} source={img}/>
     {/* <Image style={styles.avatar} source={{uri:profile.data?.data.getUser.imageUrl}}/> */}
@@ -567,14 +565,14 @@ const stylez = StyleSheet.create({
       marginBottom:10,
       alignSelf:'center',
       position: 'absolute',
-      marginTop:65,
+      marginTop:5,
       
       backgroundColor:  "#064400"
     },
    
     body:{
       margin: 15,
-      // backgroundColor: `transparent`,
+      backgroundColor: `transparent`,
       borderColor: "#064451",
       borderWidth: 2,
       borderTopWidth:0,

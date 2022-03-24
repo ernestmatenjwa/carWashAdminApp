@@ -125,10 +125,7 @@ export default function BusinessProfileScreen({ navigation }) {
        if (hide === false){
       return (
         <>
-            <View style={styles.header}>
-       <Text style={styles.HeaderText}>{name}!</Text>
-    </View>
-   
+    
     <Image style={styles.avatar} source={imageUrl}/>
     {/* <Image style={styles.avatar} source={{uri:profile.data?.data.getUser.imageUrl}}/> */}
     <View style={styles.viewAl}>
@@ -293,14 +290,14 @@ const styles = StyleSheet.create({
     marginBottom:10,
     alignSelf:'center',
     position: 'absolute',
-    marginTop:65,
+    marginTop:5,
     
     backgroundColor:  "#064400"
   },
  
   body:{
     margin: 15,
-    // backgroundColor: `transparent`,
+    backgroundColor: `transparent`,
     borderColor: "#064451",
     borderWidth: 2,
     borderTopWidth:0,
