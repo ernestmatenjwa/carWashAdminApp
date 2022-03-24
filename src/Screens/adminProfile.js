@@ -528,7 +528,7 @@ const stylez = StyleSheet.create({
     container: {
       flex: 1, 
       width: width,
-      backgroundColor: "white",
+      // backgroundColor: "white",
       // padding: 1,
     },
     viewAl: {
@@ -603,14 +603,15 @@ const stylez = StyleSheet.create({
       marginRight: 20,
     },
     info:{
-      fontSize:20,
+      fontSize:18,
       color: "#064451",
       fontWeight:'400',
     },
     description:{
-      fontSize:22,
+      fontSize:18,
       color: "#696969",
-      fontWeight:'500',
+      fontWeight:'400',
+      height: 75,
     },
     buttonContainer: {
       marginTop:10,

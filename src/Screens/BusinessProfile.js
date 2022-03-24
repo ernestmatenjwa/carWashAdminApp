@@ -125,7 +125,71 @@ export default function BusinessProfileScreen({ navigation }) {
        if (hide === false){
       return (
         <>
-      <View style = {{justifyContent:'center',alignItems:'center', width:"100%", marginTop: "1%", marginBottom: "0%"}}>          
+            <View style={styles.header}>
+       <Text style={styles.HeaderText}>{name}!</Text>
+    </View>
+   
+    <Image style={styles.avatar} source={imageUrl}/>
+    {/* <Image style={styles.avatar} source={{uri:profile.data?.data.getUser.imageUrl}}/> */}
+    <View style={styles.viewAl}>
+    <Pressable 
+      // onPress={show}
+      style={[styles.text_footer, {}]}>
+      <Icon
+          style={styles.iconZb}
+          size={24}
+          name="camera"
+       />
+      </Pressable> 
+      <Pressable 
+      // style={styles.iconZb} 
+      // onPress={show}
+      onPress={() =>  navigation.push("BusineEdit", {name, location, desc, id})}
+         
+      >        
+      <Icon
+        style={styles.iconZb}
+        size={24}
+        name="edit"
+      />
+      </Pressable>
+    </View>
+
+   
+
+    <View style={styles.body}>
+    <View style={styles.items}>
+          <Icon
+          
+          style={styles.icon}
+            size={24}
+            name="home"
+          />
+           <Text style={styles.name}>{name ? name: "loading..."}</Text>              
+          
+          </View>
+          <View style={styles.items}>
+          <Icon
+          style={styles.icon}
+            size={24}
+            name="map-marker"
+          />
+          <Text style={styles.info}>{location ? location : "loading...."}</Text>
+      
+          </View>
+          <View style={styles.items} >
+          <Icon
+          
+          style={styles.icon}
+            size={24}
+            name="pencil"
+          />
+  <Text style={styles.description}>{desc ? desc: "loading"}</Text>
+        
+          </View>
+          </View>
+     
+      {/* <View style = {{justifyContent:'center',alignItems:'center', width:"100%", marginTop: "1%", marginBottom: "0%"}}>          
        <Image source={{imageUrl}} style={styles.UserImg} /> 
     </View>
   
@@ -172,7 +236,9 @@ export default function BusinessProfileScreen({ navigation }) {
             onPress={() =>  navigation.push("BusineEdit", {name, location, desc, id})}
             >Edit</Text>
         </LinearGradient>
-    </View> 
+    </View>  */}
+
+
     </>
         )
       }
@@ -185,6 +251,110 @@ export default function BusinessProfileScreen({ navigation }) {
   );
 }
 const styles = StyleSheet.create({
+  container: {
+    flex: 1, 
+    width: width,
+    // backgroundColor: "white",
+    // padding: 1,
+  },
+  viewAl: {
+    // marginTop:50,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
+  iconZb: {
+    height: 30,
+    width: 30,
+    margin:40,
+    color:"#064451"
+  },
+  header:{
+    backgroundColor: "#064466",
+    height:120,
+    borderBottomLeftRadius: 25,
+    borderBottomRightRadius:25
+  },
+  HeaderText:{
+    color: "white",
+    marginBottom:10,
+    alignSelf:'center',
+    position: 'absolute',
+    marginTop:10,
+    fontSize:22,
+    color:"#FFFFFF",
+    fontWeight:'600',
+  },
+  avatar: {
+    width: 130,
+    height: 130,
+    borderRadius: 63,
+    borderWidth: 4,
+    borderColor: "white",
+    marginBottom:10,
+    alignSelf:'center',
+    position: 'absolute',
+    marginTop:65,
+    
+    backgroundColor:  "#064400"
+  },
+ 
+  body:{
+    margin: 15,
+    // backgroundColor: `transparent`,
+    borderColor: "#064451",
+    borderWidth: 2,
+    borderTopWidth:0,
+    borderBottomLeftRadius: 25,
+    borderBottomRightRadius:25,
+    padding: 15
+  },
+  bodyContent: {
+    flex: 1,
+    // alignItems: 'flex-start',
+    padding:30,
+  },
+  items:{
+    marginTop: 15,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
+  name:{
+    fontSize:22,
+    color:"#064451",
+    fontWeight:'600',
+    // textAlign: 'flex-start',
+  },
+  icon:{
+    color: "#064451",
+    marginRight: 20,
+  },
+  info:{
+    fontSize:16,
+    color: "#064451",
+    fontWeight:'400',
+  },
+  description:{
+    fontSize:14,
+    color: "#696969",
+    fontWeight:'300',
+    height: 75,
+  },
+  buttonContainer: {
+    marginTop:10,
+    height:45,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom:20,
+    width:250,
+    borderRadius:30,
+    backgroundColor: "#064451",
+  },
+  buttonText:{
+    color: "#ffffff",
+  }
+});
+const stylez = StyleSheet.create({
   container: {
     flex: 1,
         //alignItems: 'center',
