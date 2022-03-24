@@ -285,7 +285,70 @@ export default function AdminProfileScreen({ navigation }) {
         null
       );
     })()}
-    <View style = {{justifyContent:'center',alignItems:'center', width:"100%", }}>          
+    
+    <View style={styles.header}>
+       <Text style={styles.HeaderText}>Welcome, {name}!</Text>
+    </View>
+   
+    <Image style={styles.avatar} source={img}/>
+    {/* <Image style={styles.avatar} source={{uri:profile.data?.data.getUser.imageUrl}}/> */}
+    <View style={styles.viewAl}>
+    <Pressable 
+      // onPress={show}
+      style={[styles.text_footer, {}]}>
+      <Icon
+          style={styles.iconZb}
+          size={24}
+          name="camera"
+       />
+      </Pressable> 
+      <Pressable 
+      // style={styles.iconZb} 
+      // onPress={show}
+      onPress={() =>  navigation.push("AdminEdit", {name, email, phone, id})}
+   
+      >        
+      <Icon
+        style={styles.iconZb}
+        size={24}
+        name="edit"
+      />
+      </Pressable>
+    </View>
+
+   
+
+    <View style={styles.body}>
+    <View style={styles.items}>
+          <Icon
+          
+          style={styles.icon}
+            size={28}
+            name="user"
+          />
+           <Text style={styles.name}>{name ? name: "FullName"}</Text>              
+          
+          </View>
+          <View style={styles.items}>
+          <Icon
+          style={styles.icon}
+            size={24}
+            name="envelope"
+          />
+          <Text style={styles.info}>{email ? email : "example@gmail.com"}</Text>
+      
+          </View>
+          <View style={styles.items} >
+          <Icon
+          
+          style={styles.icon}
+            size={24}
+            name="phone"
+          />
+  <Text style={styles.description}>{phone ? phone: "+27 122 510 995"}</Text>
+        
+          </View></View>
+    {/* <View style = {{justifyContent:'center',alignItems:'center', width:"100%", }}>          
        <Image source={img} style={styles.UserImg} /> 
     </View>
     
@@ -316,8 +379,11 @@ export default function AdminProfileScreen({ navigation }) {
         rightIcon={ <Icon size={24} 
         style={styles.icon} name='phone'/>}
         disabled
-    />
-    <View style={styles.button}> 
+    /> */}
+
+
+
+    {/* <View style={styles.button}> 
         <LinearGradient       
            colors={['#064451', '#064451']}
            style={styles.signIn}
@@ -327,11 +393,13 @@ export default function AdminProfileScreen({ navigation }) {
             onPress={() =>  navigation.push("AdminEdit", {name, email, phone, id})}
             >Edit</Text>
         </LinearGradient>
-    </View> 
+    </View>  */}
     </View>
   );
 }
-const styles = StyleSheet.create({
+
+
+const stylez = StyleSheet.create({
     container: {
         flex: 1,
         //alignItems: 'center',
@@ -449,5 +517,113 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center",
     
+      },
+      buttonText:{
+        color: "#ffffff",
       }
+
+
+  });
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1, 
+      width: width,
+      backgroundColor: "white",
+      // padding: 1,
+    },
+    viewAl: {
+      // marginTop:50,
+      justifyContent: 'space-between',
+      flexDirection: 'row',
+    },
+    iconZb: {
+      height: 30,
+      width: 30,
+      margin:40,
+      color:"#064451"
+    },
+    header:{
+      backgroundColor: "#064466",
+      height:120,
+      borderBottomLeftRadius: 25,
+      borderBottomRightRadius:25
+    },
+    HeaderText:{
+      color: "white",
+      marginBottom:10,
+      alignSelf:'center',
+      position: 'absolute',
+      marginTop:10,
+      fontSize:22,
+      color:"#FFFFFF",
+      fontWeight:'600',
+    },
+    avatar: {
+      width: 130,
+      height: 130,
+      borderRadius: 63,
+      borderWidth: 4,
+      borderColor: "white",
+      marginBottom:10,
+      alignSelf:'center',
+      position: 'absolute',
+      marginTop:65,
+      
+      backgroundColor:  "#064400"
+    },
+   
+    body:{
+      margin: 15,
+      // backgroundColor: `transparent`,
+      borderColor: "#064451",
+      borderWidth: 2,
+      borderTopWidth:0,
+      borderBottomLeftRadius: 25,
+      borderBottomRightRadius:25,
+      padding: 15
+    },
+    bodyContent: {
+      flex: 1,
+      // alignItems: 'flex-start',
+      padding:30,
+    },
+    items:{
+      marginTop: 15,
+      justifyContent: 'space-between',
+      flexDirection: 'row',
+    },
+    name:{
+      fontSize:22,
+      color:"#064451",
+      fontWeight:'600',
+      // textAlign: 'flex-start',
+    },
+    icon:{
+      color: "#064451",
+      marginRight: 20,
+    },
+    info:{
+      fontSize:20,
+      color: "#064451",
+      fontWeight:'400',
+    },
+    description:{
+      fontSize:22,
+      color: "#696969",
+      fontWeight:'500',
+    },
+    buttonContainer: {
+      marginTop:10,
+      height:45,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom:20,
+      width:250,
+      borderRadius:30,
+      backgroundColor: "#064451",
+    },
+    buttonText:{
+      color: "#ffffff",
+    }
   });
