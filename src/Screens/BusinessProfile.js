@@ -23,7 +23,7 @@ export default function BusinessProfileScreen({ navigation }) {
   const [user, setUser] = React.useState([]);
  // const [b_location, setB_Location] = React.useState("");
   const [hide, setHide] = React.useState(false);
-  const [imageUrl, setBimageUrl] = React.useState("");
+  const [imageUrl, setBimageUrl] = React.useState("https://image.shutterstock.com/image-vector/camera-add-icon-260nw-1054194038.jpg");
   const [name, setName] = React.useState("");
   const [location, setLocation] = React.useState("");
   const [desc, setDesc] = React.useState("");
@@ -107,7 +107,6 @@ export default function BusinessProfileScreen({ navigation }) {
           setDesc(userData.data.getCarwash.Desc)
           setBimageUrl(userData.data.getCarwash.imageUrl)
           setID(userData.data.getCarwash.id)
-          console.log("carwash exist");
           return;
         } else{
           setHide(true)
@@ -126,7 +125,7 @@ export default function BusinessProfileScreen({ navigation }) {
       return (
         <>
     
-    <Image style={styles.avatar} source={imageUrl}/>
+    <Image style={styles.avatar} source={{uri:imageUrl}}/>
     {/* <Image style={styles.avatar} source={{uri:profile.data?.data.getUser.imageUrl}}/> */}
     <View style={styles.viewAl}>
     <Pressable 

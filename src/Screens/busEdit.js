@@ -11,7 +11,7 @@ import { getAdmin } from '../graphql/queries';
 import { getCarwash } from '../graphql/queries';
 import { updateCarwash } from '../graphql/mutations';
 import Modal from "react-native-modal";
-import CustomInput from '../components/CustomInput/CustomInput';
+import CustomInput from '../components/cus';
 import {useForm} from 'react-hook-form';
 
 const { width, height }= Dimensions.get("screen");
@@ -30,7 +30,6 @@ export default function BusineEdit({ navigation, route }) {
             location: data.location,
             Desc: data.desc
         }
-        console.log(bus)
         const apdm = await API.graphql({query: updateCarwash, variables: {input: bus}});
         console.log("You have successfully apdated your profile")
         Alert.alert("You have successfully apdated your profile")
@@ -43,12 +42,9 @@ export default function BusineEdit({ navigation, route }) {
  }
   return (
 <View style={styles.container}>
-    <View style={{marginTop: "30%",height:width-2, width:"90%", alignSelf: "center", flex: 1}}>
-    <View
-    style={{ }}
-    >
-    <Text style={[styles.tit, {alignSelf: "center", color:"green"}]}>UPDATE</Text>
-    <Text style={styles.tit}>Business Name</Text>
+  <View>
+  <Text style={{alignSelf: "center", color:"green"}}>UPDATE</Text>
+  <Text style={styles.tit}>Business Name</Text>
     <CustomInput
       name="name"
       control={control}
@@ -56,7 +52,6 @@ export default function BusineEdit({ navigation, route }) {
       inputContainerStyle={styles.Con}
       inputStyle ={styles.inputText}
       defaultValue={name}
-      iconName='home'
       rules={{
         required: 'Name is required',
         minLength: {
@@ -69,7 +64,7 @@ export default function BusineEdit({ navigation, route }) {
         },
       }}
     />
-      <Text style={styles.tit}>Business Location</Text>
+        <Text style={styles.tit}>Business Location</Text>
     <CustomInput
     name="location"
     control={control}
@@ -84,10 +79,9 @@ export default function BusineEdit({ navigation, route }) {
           message: 'Location should be at least 3 characters long',
         },
       }}
-      iconName='map-marker'
      // value={email}
     />
-    <Text style={styles.tit}>Business Description</Text>
+        <Text style={styles.tit}>Business Description</Text>
     <CustomInput
     name="desc"
     control={control}
@@ -95,7 +89,6 @@ export default function BusineEdit({ navigation, route }) {
       inputContainerStyle={styles.Con}
       inputStyle ={styles.inputText}
       defaultValue={desc}
-      iconName='pencil'
       rules={{
         required: 'Description is required',
         minLength: {
@@ -114,21 +107,25 @@ export default function BusineEdit({ navigation, route }) {
     style={{padding: 10}}
     ><Text style={{fontSize: 20, fontWeight: "bold", color: "red"}}>CANCEL</Text></Pressable>
     </View>
-    </View>
+  </View>
   
-    </View>
   </View>
   );
 }
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        //alignItems: 'center',
-        justifyContent: 'center',
-        //padding: 5
+    container: { 
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     icon: {
         color: "#064451",
+    },
+    tit: {
+      marginLeft: 10,
+      fontSize: 18,
+      fontWeight: "normal",
+      color: "#064451",
     },
     UserImg: {
         width: 90,

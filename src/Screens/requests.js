@@ -18,6 +18,8 @@ import {
 import moment from "moment";
 import { listUserRequests } from "../graphql/queries";
 import { updateUserRequests } from '../graphql/mutations';
+import Iconicons from "react-native-vector-icons/Ionicons"
+import { dummyData, FONTS, SIZES, COLORS, icons, images } from '../constants';
 
 const { width, height } = Dimensions.get("screen");
 
@@ -119,9 +121,7 @@ export default function RequestScreen({ navigation }) {
             id: id,
             status: "DONE!!",
         }
-        console.log(re)
         const apdm = await API.graphql({query: updateUserRequests, variables: {input: re}});
-        console.log("Completed!!")
         Alert.alert("Completed!!")
         
     } catch (e) {
@@ -132,7 +132,6 @@ export default function RequestScreen({ navigation }) {
  }
 
   React.useEffect(() => {
-  
     const fetchReq = async () => {
       const userInfo = await Auth.currentAuthenticatedUser({ bypassCache: true });
       setAd(userInfo.attributes.sub)
@@ -142,20 +141,16 @@ export default function RequestScreen({ navigation }) {
             listUserRequests
           )
         )
-        //return
         if(usersData.data.listUserRequests.items.length === 0)
         {
           Alert.alert("You have not made any request to any car wash yet")
           return
         }
         setReq(usersData.data.listUserRequests.items);
-        console.log("req")
         for (let i = 0; i < usersData.data.listUserRequests.items.length; i++) {
           if(usersData.data.listUserRequests.items[i].brand === "BMW"){
             usersData.data.listUserRequests.items[i]
-            console.log(i)
           }
-          console.log(usersData.data.listUserRequests.items[i])
         }
       } catch (e) {
         console.log(e);
@@ -164,7 +159,7 @@ export default function RequestScreen({ navigation }) {
     }
     fetchReq();
   }, [req])
-  const filData = ad && cur //PENDING WASH...
+  const filData = ad && cur
   ? req.filter(x => 
     x.packDesc.toLowerCase().includes(ad.toLowerCase()) && x.status.toLowerCase().includes(cur.toLowerCase())
     )
@@ -172,48 +167,32 @@ export default function RequestScreen({ navigation }) {
   return (
     <View style={{backgroundColor: "lightgrey", height: "100%",}} >
     <View style={{height: 10}}></View>
-   
    <FlatList 
+   style={{height:height/1.54}}
         data={filData}
         keyExtractor={item=>item.id}
         renderItem={({item}) => (
-            // <View style={styles.userInfo}>
-            //   <View style={styles.TextSection}>
-            //     <View style={styles.UserInfoText}>
-            //       <Text style={styles.packagee}>{item.package}</Text>
-            //     </View>
-            //     <Text style={styles.carbranndd}>{item.brand} - {item.regNO}</Text>
-                
-            //     <Text style={styles.UserName}>Service date: {item.serTime} | R {item.totalDue}</Text>
-            //    <Pressable 
-            //    onPress={() => com(item.id)}
-            //    style={{
-            //      marginLeft:"80%"
-            //      }}>
-            //        <Text style={{
-            //          color: "green",  
-            //          }}>
-            //          DONE</Text>
-            //          </Pressable> 
-            //   </View>
-            // </View>
             <View style={styles.userInfo}>
-            <View style={styles.UserImgWrapper}>
                 <Image style={styles.UserImg} source={{uri: item.carUrl}} />
-            </View>
               <View style={styles.TextSection}>
-              <Text style={{width: width/1.8,fontWeight: 'bold', fontSize: 12, color: "grey", marginLeft: "60%", marginTop: "10%"}}>{moment(item.createdAt).fromNow()}</Text>
-                  <Text style={styles.UserName}>{item.package}</Text>
-                  <Text style={{fontWeight: 'bold', fontSize: 12, }}>{item.brand} - {item.model} - {item.regNO}</Text>
-                  <Text style={{fontWeight: 'bold', fontSize: 12, }}>Service Date: {item.serTime} </Text>
-                  <Text style={{fontWeight: 'bold', fontSize: 12, }}>Subtotal: R {item.totalDue}</Text>
-                  <Text style={{fontWeight: 'bold', fontSize: 12, }}>Requester: {item.userName}</Text>
-                 <View style={{flexDirection: 'row', paddingTop: "2%", marginLeft:"50%"}}>
-                 <Pressable onPress={() => com(item.id)}><Text style={{color: "green", fontSize: 16, fontWeight: "bold", marginBottom: "40%"}}>DONE</Text></Pressable>
-                  {/* <Pressable onPress={() => del(item.id)}><Text style={{flexDirection: "", color: "red", fontSize: 16, fontWeight: "bold"}}>DELETE</Text></Pressable> */}
-                     </View> 
+              <View style={styles.TimeDate}>
+              <View style={{height: 20}}></View>
+          <Text style={{color: COLORS.gray, fontSize: 9,}}>{moment(item.createdAt).format('DD MMMM YYYY, h:mm:ss a')}</Text>
+        </View>
+        <View style={[styles.FirstRow, {flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between"}]}>
+          <Text style={styles.UserName}>{/*item.vehicleType}{' - '*/}{item.package} - R {item.totalDue}</Text>
+        </View>
+        <View><Text>{item.brand} {item.model} {item.Desc} - {item.regNO}</Text></View>
+        <View><Text style={{color: "black"}}>Desc: {item.Desc} </Text></View>
+        <View style={[styles.SecondRow, {flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between"}]}>
+          <Text style={{color: COLORS.black, fontSize: 10}}>Service date: {item.serTime}</Text>
+        </View>
+     
+        <Pressable 
+        style={{marginLeft: "70%", }}
+        onPress={() => com(item.id)}><Text style={{color: "green", fontSize: 16, fontWeight: "bold", paddingBottom: "10%"}}>DONE</Text></Pressable>
               </View>
-            </View> 
+        </View> 
         )}
         ListEmptyComponent={<View 
           style={{flex: 1,
@@ -229,13 +208,21 @@ export default function RequestScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    height: height / 6.8,
-    borderBottomRightRadius: 20,
-    borderBottomLeftRadius: 20,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  SecondRow: {
+
+  },
+  FirstRow: {
+
+  },
+  TimeDate: {
+
   },
   inputContainer: {
-    height: 50,
+    //height: 50,
     borderRadius:20,
     //borderColor: '#064451',
     //borderWidth: 1,  
@@ -266,30 +253,31 @@ const styles = StyleSheet.create({
   },
   userInfo: {
     width: width/1.03,
-    height: "80%",
+    height: 110,
     backgroundColor:"white",
     flexDirection: "row",
     justifyContent: "space-between",
     marginHorizontal: 2,
-    marginBottom: 5,
-    //marginTop: 1,
+    marginBottom: 2,
+    marginTop: 2,
     borderRadius: 13,
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
-    padding: 2,
+    //padding: 2,
   },
   UserImg: {
-    width: width/4.7,
-    height: height/9,
+    width: 60,
+    height: 60,
     borderRadius: 13,
-    marginBottom: 15,
+    padding: 10,
+    marginTop: 25,
   },
   TextSection: {
     flexDirection: "column",
     justifyContent: "center",
     padding: 15,
-    paddingLeft: 0,
-    marginLeft: 10,
+    paddingTop: 1,
+    //marginLeft: -110,
     width: 300,
     
   },

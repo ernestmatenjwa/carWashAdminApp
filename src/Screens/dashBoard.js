@@ -6,33 +6,14 @@ import {
   API,
   graphqlOperation,
 } from 'aws-amplify';
-//import { getAdmin } from './../graphql/queries';
 import { createAdmin } from '../graphql/mutations';
 import { getAdmin } from '../graphql/queries'
 
-
-const randomImages = [
-  'https://tse2.mm.bing.net/th?id=OIP.e1KNYwnuhNwNj7_-98yTRwHaF7&pid=Api&P=0&w=221&h=178',
-  'https://tse1.mm.bing.net/th?id=OIP.Q_-11kM22YOL505PnecHqgHaI9&pid=Api&P=0&w=300&h=300',
-]
-/*
-@auth(rules: [{ allow: owner }]) 
-*/ 
-// You can explore the built-in icon families and icons on the web at:
-//input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
-// https://icons.expo.fyi/
-
 export default function DashBoadScreen({ navigation }) {
 
-  const getRandomImage = () => {
-    return randomImages[Math.floor(Math.random() * randomImages.length)];
-  }
-
   React.useEffect( () => {
-    //console.log("User is already registered in database");
     const fetchUser = async () => {
       const userInfo = await Auth.currentAuthenticatedUser({ bypassCache: true });
-      //console.log(userInfo);
       if(userInfo){
         const userData = await API.graphql(
           graphqlOperation(
@@ -41,11 +22,9 @@ export default function DashBoadScreen({ navigation }) {
             )
         )
         if (userData.data.getAdmin) {
-          console.log("User is already registered in database");
           return;
         }
-        console.log('viewww work')
-        //return
+
         const newUser = {
           id: userInfo.attributes.sub,
           name: userInfo.username,
@@ -91,29 +70,9 @@ export default function DashBoadScreen({ navigation }) {
         </View>
         
       </TouchableOpacity>   
-      {/* <TouchableOpacity 
-      style={styles.inner}
-      onPress={() =>  navigation.push("VehicleTypeScreen")}
-      >
-        <View style={{width: 100, height: 80, borderRadius:10, marginTop:30, alignItems:"center"}}>
-           <Iconicons name={"folder-outline"} size={25} color={"#064451"} />
-           <Text style={{color: "#064451", fontWeight: "bold", fontSize: 15, padding: 5, textAlign: "center" }}>Vehicle Type</Text>
-        </View>
-        
-      </TouchableOpacity>    
       <TouchableOpacity 
       style={styles.inner}
-      onPress={() =>  navigation.push("InformationScreen")}
-      >
-        <View style={{width: 100, height: 80, borderRadius:10, marginTop:30, alignItems:"center"}}>
-           <Iconicons name={"alert-circle-outline"} size={25} color={"#064451"} />
-           <Text style={{color: "#064451", fontWeight: "bold", fontSize: 15 }}>Information</Text>
-        </View>
-       
-      </TouchableOpacity>  */} 
-      <TouchableOpacity 
-      style={styles.inner}
-      onPress={() =>  navigation.push("InformationScreen")}
+      onPress={() =>  navigation.push("StaffScreen")}
       >
         <View style={{width: 150, height: 80, borderRadius:10, marginTop:30, alignItems:"center"}}>
            <Iconicons name={"folder-outline"} size={25} color={"#064451"} />
@@ -187,7 +146,6 @@ export default function DashBoadScreen({ navigation }) {
           fontSize: 15, 
           alignSelf: "flex-end",
           padding: 10,
-         // paddingTop: 40,
           marginTop: -120,
         }}>4</Text>
         <Text style={{
@@ -196,7 +154,6 @@ export default function DashBoadScreen({ navigation }) {
           fontSize: 15, 
           alignSelf: "flex-end",
           padding: 10,
-          //paddingTop: 40,
         }}>12</Text>
         <Text style={{
           color: "#064451", 
@@ -204,7 +161,6 @@ export default function DashBoadScreen({ navigation }) {
           fontSize: 15, 
           alignSelf: "flex-end",
           padding: 10,
-          //paddingTop: 40,
         }}>134</Text>
       </View>
   </View>
@@ -212,11 +168,9 @@ export default function DashBoadScreen({ navigation }) {
 }
 const styles = StyleSheet.create({
     container:{
-        width:'100%',
-        //height:'85%',
-        flexDirection:'row',
-        flexWrap:'wrap',
-        justifyContent:'center',
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
  
     inner:{

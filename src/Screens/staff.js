@@ -182,11 +182,9 @@ export default function StaffScreen({ navigation }) {
 }
 const styles = StyleSheet.create({
   container:{
-      width:'100%',
-      //height:'85%',
-      flexDirection:'row',
-      flexWrap:'wrap',
-      justifyContent:'center',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   header: {
     marginTop: 30,

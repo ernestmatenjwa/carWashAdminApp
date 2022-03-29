@@ -13,7 +13,18 @@ import { createCarwash } from '../graphql/mutations';
 import Modal from "react-native-modal";
 import CustomInput from '../components/CustomInput/CustomInput';
 import {useForm} from 'react-hook-form';
+/*
+from s3
 
+import { DataStore } from '@aws-amplify/datastore';
+import { Admin } from './models';
+
+ Models in DataStore are immutable. To update a record you must use the copyOf function
+ to apply updates to the item’s fields rather than mutating the instance directly 
+ await DataStore.save(Admin.copyOf(CURRENT_ITEM, item => {
+  // Update the values on {item} variable to update DataStore entry
+}));
+*/
 const { width, height }= Dimensions.get("screen");
 
 export default function AdminProfileScreen({ navigation }) {
@@ -22,13 +33,13 @@ export default function AdminProfileScreen({ navigation }) {
     const [profile, setProfile] = React.useState([]);
     const [name, setName] = React.useState("");
     const [email, setEmail] = React.useState("");
+    const [imageUrl, setBimageUrl] = React.useState("https://image.shutterstock.com/image-vector/camera-add-icon-260nw-1054194038.jpg");
     const [phone, setPhone] = React.useState("");
     const [id, setID] = React.useState("");
     const [isModalVisible, setModalVisible] = React.useState(false);
     const {control, handleSubmit, watch} = useForm();
 
       React.useEffect( () => {
-        console.log("Car is already");
         const fetchUser = async () => {
             const userInfo = await Auth.currentAuthenticatedUser({ bypassCache: true });
             if(userInfo){
@@ -39,11 +50,9 @@ export default function AdminProfileScreen({ navigation }) {
               )
            ) 
           if (userData.data.getCarwash) {
-          console.log("Car is already registered in database");
           return;
         }  
         setModalVisible(true)
-        console.log("we here");
         // return(
         //     <Modal isVisible={isModalVisible} style={{backgroundColor: "white",opacity: 0.8,}}>   
         //     <View
@@ -185,6 +194,7 @@ export default function AdminProfileScreen({ navigation }) {
               setEmail(userData.data.getAdmin.email)
               setPhone(userData.data.getAdmin.phone)
               setID(userData.data.getAdmin.id)
+              setBimageUrl(userData.data.getAdmin.imageUrl)
                 } catch (e) {
                   console.log('error getting user 22', e);  
                 } 
@@ -288,7 +298,7 @@ export default function AdminProfileScreen({ navigation }) {
     
    
    
-    <Image style={styles.avatar} source={img}/>
+    <Image style={styles.avatar} source={{uri:imageUrl}}/>
     {/* <Image style={styles.avatar} source={{uri:profile.data?.data.getUser.imageUrl}}/> */}
     <View style={styles.viewAl}>
     <Pressable 
@@ -304,7 +314,6 @@ export default function AdminProfileScreen({ navigation }) {
       // style={styles.iconZb} 
       // onPress={show}
       onPress={() =>  navigation.push("AdminEdit", {name, email, phone, id})}
-   
       >        
       <Icon
         style={styles.iconZb}

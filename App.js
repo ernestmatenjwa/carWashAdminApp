@@ -188,12 +188,12 @@ export default function App() {
             headerBackTitleVisible: false,
             headerTitleAlign: 'center',
             headerTitleStyle: {
-              color: "#064451",
+              color: "white",
               fontWeight: "700",
               fontSize: 25,
             },
             headerStyle: {
-               backgroundColor: "lightgrey",
+               backgroundColor: "#064451",
             }
           })} 
         />
