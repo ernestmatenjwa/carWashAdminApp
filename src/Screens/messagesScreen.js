@@ -73,10 +73,9 @@ export default function MessagesScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
-    alignItems: 'center', 
-    paddingLeft: 20,
-    paddingRight: 20,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: "#ffffff"
   },
   card: {

@@ -148,9 +148,6 @@ const styles = StyleSheet.create({
       borderBottomRightRadius:20,
       paddingHorizontal: 20,
       paddingVertical: 30,
-      
-      
-     
   },
   text_header: {
       color: '#064451',

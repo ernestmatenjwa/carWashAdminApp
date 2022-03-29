@@ -30,7 +30,6 @@ export default function BusineEdit({ navigation, route }) {
             location: data.location,
             Desc: data.desc
         }
-        console.log(bus)
         const apdm = await API.graphql({query: updateCarwash, variables: {input: bus}});
         console.log("You have successfully apdated your profile")
         Alert.alert("You have successfully apdated your profile")

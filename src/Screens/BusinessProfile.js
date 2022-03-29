@@ -7,7 +7,6 @@ import { getCarwash } from '../graphql/queries';
 import { createCarwash } from '../graphql/mutations';
 import Modal from "react-native-modal";
 //import CustomInput from '../CustomInput/CustomInput';
-import Iconicons from "react-native-vector-icons/Ionicons"
 import {useForm} from 'react-hook-form';
 import {
     Auth, 
@@ -18,8 +17,11 @@ import {
 const { width, height }= Dimensions.get("screen");
 
 export default function BusinessProfileScreen({ navigation }) {
+  //const [text, onChangeText] = React.useState('');
+  //const [fill, setFill] = React.useState(0);
   const {control, handleSubmit, watch} = useForm();
   const [user, setUser] = React.useState([]);
+ // const [b_location, setB_Location] = React.useState("");
   const [hide, setHide] = React.useState(false);
   const [imageUrl, setBimageUrl] = React.useState("https://image.shutterstock.com/image-vector/camera-add-icon-260nw-1054194038.jpg");
   const [name, setName] = React.useState("");
@@ -44,6 +46,7 @@ export default function BusinessProfileScreen({ navigation }) {
             )
         )
         if (userData.data.getCarwash) {
+          console.log("User is aalreadyyy registered in database");
           setModalVisible(false);
           return;
         }
@@ -60,15 +63,43 @@ export default function BusinessProfileScreen({ navigation }) {
           )
         )
       }
-  
+    
+   /* console.log(data)
+    try{
+        await API.graphql(graphqlOperation(createCarwash, { input: data}));
+        alert('Car wash successfully registered')
+        setModalVisible(false);
+       // window.location.replace('/profile')
+    } catch (e) {
+        console.log('error creating user ', e);
+    }*/
   };
+//   const handleSubmittt = async (e) => {
+//     e.preventDefault();
+//        const data = { location: b_location, name: bname, imageUrl: imageUrl };
+//          console.log('data', l)
+//        try{
+//            await API.graphql(graphqlOperation(createCarwash, { input: data}));
+//            alert('Car wash successfully registered')
+//            setModalVisible(false);
+//           // window.location.replace('/profile')
+//        } catch (e) {
+//            console.log('error creating user ', e);
+//        }  
+// }
 
   React.useEffect( () => {
+    console.log("we about to display carwash")
     const getCarwashDetails = async (e) => {
       const userInfo = await Auth.currentAuthenticatedUser({ bypassCache: true });
       const ID = userInfo.attributes.sub
+         //e.preventDefault();
+         console.log('ca++++==', hide);
          try{
+           //console.log('try');
           const userData = await API.graphql(graphqlOperation(getCarwash, {id: ID}));
+          console.log('yes22 ', userData);
+         // console.log('>> ', profile.data?.data.getUserByEmail.name, '<<');
          if (userData.data.getCarwash) {
           setHide(false)
           setName(userData.data.getCarwash.name)
@@ -92,32 +123,119 @@ export default function BusinessProfileScreen({ navigation }) {
         {(() => {
        if (hide === false){
       return (
-      <View style = {styles.container}>
-   <View style={{ flexDirection: "row",}}>
-       <Iconicons style={{padding: 10}} name="camera-outline" size={35} color={"#064451"} />
-       {<Image style={{ width: width/4.7,
-                        height: height/9,
-                        borderRadius: 33,
-                        borderWidth: 1,
-                        borderColor: "grey",
-                        }} 
-                        source={{uri: imageUrl}} />}<Iconicons onPress={() =>  navigation.push("BusineEdit", {name, location, desc, id})} style={{padding: 10}} name="create-outline" size={35} color={"#064451"} />
-   </View>
-    <Text style={styles.text_footer}>Business Name</Text>
-    <View style={{borderWidth: 1, borderColor: "grey", padding: 7, width: 300, alignSelf: "flex-start"}}>
-    <Text style={{fontSize: 16}}>{name}</Text>
-    </View>
+        <>
     
-    <Text style={styles.text_footer}>Business location</Text>
-    <View style={{borderWidth: 1, borderColor: "grey", padding: 7, width: 300, alignSelf: "flex-start"}}>
-    <Text style={{fontSize: 16}}>{location}</Text>
+    <Image style={styles.avatar} source={{uri:imageUrl}}/>
+    {/* <Image style={styles.avatar} source={{uri:profile.data?.data.getUser.imageUrl}}/> */}
+    <View style={styles.viewAl}>
+    <Pressable 
+      // onPress={show}
+      style={[styles.text_footer, {}]}>
+      <Icon
+          style={styles.iconZb}
+          size={24}
+          name="camera"
+       />
+      </Pressable> 
+      <Pressable 
+      // style={styles.iconZb} 
+      // onPress={show}
+      onPress={() =>  navigation.push("BusineEdit", {name, location, desc, id})}
+         
+      >        
+      <Icon
+        style={styles.iconZb}
+        size={24}
+        name="edit"
+      />
+      </Pressable>
     </View>
 
-    <Text style={styles.text_footer}>Business Description</Text>
-    <View style={{borderWidth: 1, borderColor: "grey", padding: 7, width: 300, alignSelf: "flex-start"}}>
-    <Text style={{fontSize: 16}}>{desc}</Text>
+   
+
+    <View style={styles.body}>
+    <View style={styles.items}>
+          <Icon
+          
+          style={styles.icon}
+            size={24}
+            name="home"
+          />
+           <Text style={styles.name}>{name ? name: "loading..."}</Text>              
+          
+          </View>
+          <View style={styles.items}>
+          <Icon
+          style={styles.icon}
+            size={24}
+            name="map-marker"
+          />
+          <Text style={styles.info}>{location ? location : "loading...."}</Text>
+      
+          </View>
+          <View style={styles.items} >
+          <Icon
+          
+          style={styles.icon}
+            size={24}
+            name="pencil"
+          />
+  <Text style={styles.description}>{desc ? desc: "loading"}</Text>
+        
+          </View>
+          </View>
+     
+      {/* <View style = {{justifyContent:'center',alignItems:'center', width:"100%", marginTop: "1%", marginBottom: "0%"}}>          
+       <Image source={{imageUrl}} style={styles.UserImg} /> 
     </View>
-    </View>
+  
+    <Text style={styles.text_footer}>Business Name</Text>
+    <Input 
+        //onChangeText={onChangeText} value={text}
+        inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
+        inputStyle ={[styles.inputText, {paddingLeft: 15}]}                
+        value={name}
+        rightIcon={ <Icon size={24} 
+        style={styles.icon} name='home'/>}
+        disabled
+    />
+    
+    <Text style={styles.text_footer}>Business location</Text>
+    <Input 
+        //onChangeText={onChangeText} value={text}
+        inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
+        inputStyle = {[styles.inputText, {paddingLeft: 15}]}
+        value={location}
+        rightIcon={ <Icon size={24} 
+        style={styles.icon} name='map-marker'/>}
+        disabled
+    />
+
+<Text style={styles.text_footer}>Business Description</Text>
+    <Input 
+        //onChangeText={onChangeText} value={text}
+        inputContainerStyle={[styles.inputContainer, {backgroundColor: "white", borderRadius: 10}]}
+        inputStyle = {[styles.inputText, {paddingLeft: 15}]}
+        value={desc}
+        rightIcon={ <Icon size={24} 
+        style={styles.icon} name='pencil'/>}
+        disabled
+    />
+    
+    <View style={styles.button}> 
+        <LinearGradient
+           colors={['#064451', '#064451']}
+           style={styles.signIn}
+        ><Text style={[
+            styles.textSign, 
+            {color:'#fff'}]}
+            onPress={() =>  navigation.push("BusineEdit", {name, location, desc, id})}
+            >Edit</Text>
+        </LinearGradient>
+    </View>  */}
+
+
+    </>
         )
       }
       return (
@@ -130,11 +248,113 @@ export default function BusinessProfileScreen({ navigation }) {
 }
 const styles = StyleSheet.create({
   container: {
+    flex: 1, 
+    width: width,
+    // backgroundColor: "white",
+    // padding: 1,
+  },
+  viewAl: {
+    // marginTop:50,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
+  iconZb: {
+    height: 30,
+    width: 30,
+    margin:40,
+    color:"#064451"
+  },
+  header:{
+    backgroundColor: "#064466",
+    height:120,
+    borderBottomLeftRadius: 25,
+    borderBottomRightRadius:25
+  },
+  HeaderText:{
+    color: "white",
+    marginBottom:10,
+    alignSelf:'center',
+    position: 'absolute',
+    marginTop:10,
+    fontSize:22,
+    color:"#FFFFFF",
+    fontWeight:'600',
+  },
+  avatar: {
+    width: 130,
+    height: 130,
+    borderRadius: 63,
+    borderWidth: 4,
+    borderColor: "white",
+    marginBottom:10,
+    alignSelf:'center',
+    position: 'absolute',
+    marginTop:5,
+    
+    backgroundColor:  "#064400"
+  },
+ 
+  body:{
+    margin: 15,
+    backgroundColor: `transparent`,
+    borderColor: "#064451",
+    borderWidth: 2,
+    borderTopWidth:0,
+    borderBottomLeftRadius: 25,
+    borderBottomRightRadius:25,
+    padding: 15
+  },
+  bodyContent: {
     flex: 1,
-    alignItems: 'center',
+    // alignItems: 'flex-start',
+    padding:30,
+  },
+  items:{
+    marginTop: 15,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
+  name:{
+    fontSize:22,
+    color:"#064451",
+    fontWeight:'600',
+    // textAlign: 'flex-start',
+  },
+  icon:{
+    color: "#064451",
+    marginRight: 20,
+  },
+  info:{
+    fontSize:16,
+    color: "#064451",
+    fontWeight:'400',
+  },
+  description:{
+    fontSize:14,
+    color: "#696969",
+    fontWeight:'300',
+    height: 75,
+  },
+  buttonContainer: {
+    marginTop:10,
+    height:45,
+    flexDirection: 'row',
     justifyContent: 'center',
-    //backgroundColor: "grey"
-    //overflow: "visible",
+    alignItems: 'center',
+    marginBottom:20,
+    width:250,
+    borderRadius:30,
+    backgroundColor: "#064451",
+  },
+  buttonText:{
+    color: "#ffffff",
+  }
+});
+const stylez = StyleSheet.create({
+  container: {
+    flex: 1,
+        //alignItems: 'center',
+        justifyContent: 'center',
   },
   Con: {
     height: 35,
@@ -194,10 +414,8 @@ const styles = StyleSheet.create({
   text_footer: {
       color: '#064451',
       fontSize: 18,
-      paddingTop: 10,
-      //paddingLeft: "5%",
-      alignSelf: "flex-start",
-      fontWeight: "bold"
+      paddingBottom: 10,
+      paddingLeft: "5%"
   },
   action: {
       flexDirection: 'row',
